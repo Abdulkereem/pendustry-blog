@@ -40,12 +40,14 @@
   <div class="w-full">
   <!-- Top flex container -->
     <div class="flex h-full self-stretch items-center">
-      <div class="flex h-full self-stretch">
-        <img src="pen-logo.png" width="120" height="100" alt="LOGO" />
-        <strong class="blog">
-          BLOG
-        </strong>
-      </div>
+      <a href="/">
+        <div class="flex h-full self-stretch">
+          <img src="pen-logo.png" width="120" height="100" alt="LOGO" />
+          <strong class="blog">
+            BLOG
+          </strong>
+        </div>
+      </a>
       <div class=" w-full flex">
         <div class="w-1/2 sm:w-5/6 ">
           <div class="flex hidden sm:flex justify-center">

@@ -13,6 +13,6 @@ export const quillTools = [
   [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
   [{ 'font': [] }],
   [{ 'align': [] }],
-  ['image', 'code-block'],
+  ['image', 'code-block', 'link'],
   ['clean']                                         // remove formatting button
 ];

@@ -1,36 +1,5 @@
 <script>
-
-  let mgs = ['im1', 'im2', 'im3', 'im4', 'im5'];
-  let details = [
-    "5 web APIs that",// add mobile functionality to your project",
-    "Building a random number generator with JavaScript and Node.js",
-    "7 most common web design mistakes according to psychology",
-    "1 week with GitHub Copilot: Building an app using only Copilot"
-  ]
-
-  let subDetails = [
-    "Learn about APIs that ",//provide mobile-friendly functionality, such as the Web Share, Contact Picker, and Clipboard APIs.",
-    "Improve the security of your Node.js apps with private keys or create useful gameplay features with this guide to.",
-    "If you’re a frontend dev tasked with designing an app in addition to building it, these psychological principles can",
-    "GitHub Copilot is the newest tool to autocomplete code with the help of OpenAI. Learn how to build an"
-  ]
-  const fillMage=(ind, type=null)=>{
-    switch (type) {
-      case 0:
-        return mgs[ind%5];
-        break;
-      case 1:
-        return details[ind%4];
-        break;      
-      case 2:
-        return subDetails[ind%4];
-        break;
-    
-      default:
-        return mgs[ind%5];
-    }
-  }
-
+	import { fillMage } from './../../Utilities/Constants/posts.js';
   let date = new Date();
 </script>
 
@@ -41,7 +10,7 @@
       <div class="map">
         <!-- caption container -->
         <div class="caption-container">
-          <a href="#">
+          <a href="/{fillMage(i,1)}">
             <img class="caption" src="{fillMage(i,0)}.png" alt="post" />
           </a>              
         </div>
@@ -49,7 +18,7 @@
         <div class="lg-texts">
           <!-- title -->
           <div class="self-start">
-            <a href="#" class="title ">{fillMage(i,1)}</a>
+            <a href="/{fillMage(i,1)}" class="title ">{fillMage(i,1)}</a>
           </div>
           <!-- summary -->
           <div class="sub my-3 self-center">

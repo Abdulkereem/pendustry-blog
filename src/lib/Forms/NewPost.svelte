@@ -30,6 +30,7 @@
   let description ="hghghg";
   let descriptionError = false;
   let caption;
+  let duration;
   let contentError = false;
   let submitting= false;
 
@@ -71,9 +72,12 @@
       title, description, caption, content: quill.root.innerHTML
     }
 
-    // let diss = new Quill('#dis', {modules:{toolbar:false}, theme:'bubble', readOnly:true})
-    // diss.setContents(quill.getContents())
-    submitting = false;
+    let diss = new Quill('#dis', {modules:{toolbar:false}, theme:'bubble', readOnly:true})
+    diss.setContents(quill.getContents())
+    setTimeout(()=>{
+      submitting = false;
+
+    }, 500)
 
 
   }
@@ -84,7 +88,7 @@
   <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 </svelte:head>
 <div>
-  <!-- <div id="dis" class="border-0 hover:scale-110"> </div> -->
+  <div id="dis" class="border-0 hover:scale-110"> </div>
   <div class="flex justify-center">
     <div class="w-full max-w-3xl px-3 xs:px-6 sm:px-10">
       <!-- Title -->
@@ -113,6 +117,15 @@
               Description is required
             </div>
           {/if}
+        </div>
+      </div>
+      <!-- Duration -->
+      <div class="my-3">
+        <label for="duration"  class="label">Duration</label>
+        <div class="w-full">
+          <input id="duration" bind:value={duration} name="duration" 
+            class="inputs" placeholder="Duration" type="number" min="1"
+          />
         </div>
       </div>
       <!-- Caption -->
@@ -172,8 +185,9 @@
     font-size: 16px;
     font-family: roboto;
     line-height: 28px;
-    @apply rounded-md w-full py-1 px-2 border transition duration-500 transform delay-100 focus:ring-1 ring-indigo-900 
-    focus:border-indigo-900 ring-opacity-40;
+    @apply rounded-md w-full py-1 px-2 border transition duration-500 transform 
+    delay-100 focus:ring-1 ring-indigo-900 focus:border-indigo-900 ring-opacity-40 
+    hover:border-indigo-200 hover:ring-opacity-10;
   }
 
   .label{
