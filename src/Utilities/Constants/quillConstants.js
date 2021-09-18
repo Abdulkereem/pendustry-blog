@@ -16,3 +16,17 @@ export const quillTools = [
   ['image', 'code-block', 'link'],
   ['clean']                                         // remove formatting button
 ];
+
+export const quillTable= {
+  operationMenu: {
+    items: {
+      unmergeCells: {
+        text: 'Another unmerge cells name'
+      }
+    },
+    color: {
+      colors: ['green', 'red', 'yellow', 'blue', 'white'],
+      text: 'Background Colors:'
+    }
+  }
+};

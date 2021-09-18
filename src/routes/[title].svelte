@@ -25,10 +25,12 @@
   }
 </script>
 <script>
+	import Comment  from '$lib/Forms/Comment.svelte';
   import PostDetails from "$lib/Posts/PostDetails.svelte";
-  import { toFullMonth } from './../Utilities/Constants/times.js';
-import { onMount } from 'svelte';
+  // import { toFullMonth } from './../Utilities/Constants/times.js';
+  import { onMount } from 'svelte';
   export let post;
+
   $: if(post) {
     console.log(post);  
     onMount(()=>{
@@ -42,6 +44,7 @@ import { onMount } from 'svelte';
 </script>
 <div>
    <PostDetails post={post} />
+   <Comment />
 </div>
 <style lang="scss">
 

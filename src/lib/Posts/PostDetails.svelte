@@ -35,6 +35,8 @@
 <svelte:head> 
   <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
   <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
 </svelte:head>
 <div>  
   <div class="flex justify-center">
