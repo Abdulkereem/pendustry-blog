@@ -1,8 +1,8 @@
 <script>
 	import { quillTools, quillTable } from './../../Utilities/Constants/quillConstants.js';
   import { onMount } from "svelte";  
-  import Fa from 'svelte-fa/src/fa.svelte'
-  import { faImage, faTable, faSpinner } from '@fortawesome/free-solid-svg-icons'
+  import Fa from 'svelte-fa/src/fa.svelte';
+  import { faImage, faTable, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 
   let quill;

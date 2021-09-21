@@ -42,7 +42,7 @@
     <div class="flex h-full self-stretch items-center">
       <a href="/">
         <div class="flex h-full self-stretch">
-          <img src="./../../static/pen-logo.png" width="120" height="100" alt="LOGO" />
+          <img src="/pen-logo.png" width="120" height="100" alt="LOGO" />
           <strong class="blog">
             BLOG
           </strong>

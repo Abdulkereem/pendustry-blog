@@ -3,6 +3,7 @@
   export async function load({ page, context }) {
     
     // console.log(page.params.title)
+    // console.log('tag', context)
     // if (res.ok) {
       let {title} = page.params;
       let index = details.findIndex((e)=>e == title);

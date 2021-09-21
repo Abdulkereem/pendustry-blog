@@ -1,4 +1,6 @@
-<script>
+<script>  
+  import Fa from 'svelte-fa/src/fa.svelte';
+  import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
   let fullName ='';
   let email='';
@@ -8,16 +10,22 @@
   let contentError=false;
   let submitting=false;
 
+  const regex =(val)=>{
+    if(/^\w+\.?\w+@\w+\.?\w+\.\w+$/.test(val.trim())) return true;
+    if(/^\w+\.?\w*@\w+\.\w+$/.test(val.trim())) return true;
+    return false;
+  } 
+
   const validate=()=>{
     fullNameError = !fullName.trim()?true:false;
-    emailError = !email.trim()?true:false;
+    emailError = !regex(email)?true:false;
     contentError = !content.trim()?true:false;
     return (fullNameError || emailError || contentError)? false: true;
   }
 
   const checkBlur=({target:{value, name}})=>{
     if(name == 'email'){
-      return emailError = !value.trim()? true : false;
+      return emailError = !regex(value)? true : false;
     }else if(name == 'fullName'){
       return fullNameError = !value.trim()? true : false;
     }else{
@@ -47,15 +55,15 @@
 <div class="flex justify-center mt-5">
   <div class="w-full max-w-3xl px-3 xs:px-10 sm:px-14 ">
     <!-- Comment Header -->
-    <div class="text-2xl font-medium mb-2">Comment</div>
+    <div class="text-2xl font-medium mb-2">Comment here</div>
     <!-- Form part  -->
     <div class=" w-full">
       <!-- fullName -->
       <div class="">        
-        <label for="fullName" class="label">fullName*</label>
+        <label for="fullName" class="label">Full name*</label>
         <div class="w-full">
           <input id="fullName" name="fullName" bind:value={fullName} 
-            class="inputs" placeholder="fullName" on:blur={checkBlur}
+            class="inputs" placeholder="Full name" on:blur={checkBlur}
           />
         </div>
         {#if fullNameError}
@@ -65,25 +73,25 @@
           {/if}
       </div>
       <!-- Email -->
-      <div class="my-3">
+      <div class="my-2">
         <label for="email"  class="label">Email *</label>
         <div class="w-full">
           <input id="email" on:blur={checkBlur} bind:value={email} name="email" 
-            class="inputs" placeholder="email" 
+            class="inputs" type="email" placeholder="Email" 
           />
           {#if emailError}
             <div class="errors">
-              Email is required
+              Valid email is required
             </div>
           {/if}
         </div>
       </div>
       <!-- Content -->
-      <div class="my-3">
+      <div class="mb-3">
         <label for="content"  class="label">Comment *</label>
         <div class="w-full">
           <textarea id="content" on:blur={checkBlur} bind:value={content} name="content" 
-            class="inputs" placeholder="Write your comment here" 
+            class="inputs" placeholder="Write your comment here" rows="5" 
           />
           {#if contentError}
             <div class="errors">
