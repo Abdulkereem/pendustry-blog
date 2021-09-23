@@ -1,53 +1,59 @@
-<script>
-	import { quillTools, quillTable } from './../../Utilities/Constants/quillConstants.js';
+<script context="module">
+	/**
+	 * @type {import('@sveltejs/kit').Load}
+	 */
+	export async function load({ page, fetch, session, stuff }) {
+		// const url = `/blog/${page.params.slug}.json`;
+		// const res = await fetch(url);
+    console.log(page);
+
+		if (false) {
+			return {
+				props: {
+					content:''
+				}
+			};
+		}
+
+		return {
+			status: 404,
+			error: new Error(`Could not load`)
+		};
+	}
+</script>
+
+<script>	
   import { onMount } from "svelte";  
   import Fa from 'svelte-fa/src/fa.svelte';
-  import { faImage, faTable, faSpinner } from '@fortawesome/free-solid-svg-icons';
+  import { faImage, faTable, faSpinner, faCheck } from '@fortawesome/free-solid-svg-icons';
+  import { API } from './../../Utilities/jsons/endpoints.json';
+  import axios from 'axios';
+  import Editor from "$lib/Posts/Editor.svelte";
 
 
-  let quill;
-  let options = {
-    // debug: 'info',
-    modules: {
-      table:true,
-      toolbar: quillTools,
-      'better-table': quillTable,
-    },
-    placeholder: 'Write your content here...',
-    // readOnly: true,
-    theme: 'snow'
-  }
-
-  onMount(()=>{
-    if(window.Quill && window.quillBetterTable){
-      Quill.register({
-        'modules/better-table': quillBetterTable
-      }, true)
-      quill = new Quill("#editor", options);
-    }
-  })
-
-  let captionPreview=null;  
-  let title="hghghgh";
+  let content='';
+  let bannerPreview=null;  
+  let title="First Article";
   let titleError =false;
-  let description ="hghghg";
+  let description ="First article by beyond";
   let descriptionError = false;
-  let caption;
-  let duration;
+  let banner;
   let contentError = false;
   let submitting= false;
+  let responseData;
+  let saving= false;
 
 
 
-  const getCaption=({target:{files}})=>{
-    caption = files[0];
-    captionPreview = URL.createObjectURL(caption);
+  const getBanner=({target:{files}})=>{
+    banner = files[0];
+    bannerPreview = URL.createObjectURL(banner);
   }
 
   const validate=()=>{
     titleError = !title.trim()?true:false;
     descriptionError = !description.trim()?true:false;
-    contentError = !quill.root.innerHTML? true: false;
+    contentError = !content.trim()? true: false;
     return (titleError || descriptionError || contentError)? false: true;
   }
 
@@ -59,55 +65,51 @@
     }
   }
 
-  const addTable=()=>{
-    if(!window.quillBetterTable) return;
-    let tableModule = quill.getModule('better-table')
-    console.log(tableModule);
-    tableModule.insertTable(3, 3)
-  }
+ $: if(content.trim()){
+    (async()=>{
+      saving = true;
+      await setTimeout(()=>saving = false, 500)
+  })()
+
+ }
 
 
-  const submit=()=>{
+  const submit=async()=>{
     if(submitting) return;
     if(!validate()) return;
     submitting = true;
+    responseData= null;
 
-    let formdata = new FormData();
+    const formdata = new FormData();
+    const stringifiedContent = JSON.stringify(content);
+    localStorage.con = stringifiedContent;
     formdata.append('title', title);
     formdata.append('description', description);
-    formdata.append('caption', caption);
-    formdata.append('content', quill.root.innerHTML);
-
-    let payload={
-      title, description, caption, content: quill.root.innerHTML
+    formdata.append('banner', banner);
+    formdata.append('content', stringifiedContent);
+    formdata.append('pbk', '1234');
+    const head={"Content-Type": "multipart/form-data"}
+    try {
+      let reponse = await axios.post(`${API}createPost`, formdata, {headers: head});
+      data = await reponse.json();
+      console.log(data);
+      responseData = {staus: 1, message: 'Content successfuly published'};
+    } catch (err) {
+      console.log(err);
+      responseData = {staus: 0, message: 'Oops! Something went wrong.'};
     }
 
-    let diss = new Quill('#dis', {modules:{toolbar:false}, theme:'bubble', readOnly:true})
-    diss.setContents(quill.getContents())
-    setTimeout(()=>{
-      submitting = false;
-
-    }, 500)
-
-
+    submitting = false;
   }
   
 </script>
-<svelte:head>  
-  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-  <link href="https://unpkg.com/quill-better-table@1.2.8/dist/quill-better-table.css" rel="stylesheet">
-  <!-- <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script> -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/quill/2.0.0-dev.3/quill.min.js" type="text/javascript"></script>
-  <script src="https://cdn.jsdelivr.net/npm/quill-better-table@1.2.10/dist/quill-better-table.min.js" ></script>
-  <!-- <script src="https://unpkg.com/quill-better-table@1.2.10/dist/quill-better-table.js"></script> -->
-</svelte:head>
-<div>
-  <div id="dis" class="border-0 hover:scale-110"> </div>
-  <div class="flex justify-center">
-    <div class="w-full max-w-3xl px-3 xs:px-6 sm:px-10">
+
+<div class="w-full min-w-full max-w-full block">
+  <div class="flex justify-center w-full">
+    <div class="w-full max-w-4xl px-3 xs:px-6 sm:px-10">
       <!-- Title -->
       <div class="">        
-        <label for="title" class="label">TITLE*</label>
+        <label for="title" class="label">TITLE* </label>
         <div class="w-full">
           <input id="title" name="title" bind:value={title} 
             class="inputs" placeholder="Title" on:blur={checkBlur}
@@ -123,7 +125,7 @@
       <div class="my-3">
         <label for="description"  class="label">DESCRIPTION*</label>
         <div class="w-full">
-          <input id="description" on:blur={checkBlur} bind:value={description} name="description" 
+          <input id="description" on:blur={checkBlur} bind:value={description} name="Summary" 
             class="inputs" placeholder="Description" 
           />
           {#if descriptionError}
@@ -133,31 +135,22 @@
           {/if}
         </div>
       </div>
-      <!-- Duration -->
-      <div class="my-3">
-        <label for="duration"  class="label">Duration</label>
-        <div class="w-full">
-          <input id="duration" bind:value={duration} name="duration" 
-            class="inputs" placeholder="Duration" type="number" min="1"
-          />
-        </div>
-      </div>
-      <!-- Caption -->
+      <!-- banner -->
       <div class="my-3">
         <div class="w-full bg-white rounded-md py-2">
-          <label for="caption" class="label">
+          <label for="banner" class="label">
             <div class="flex items-center">
-              <span class="mx-4">Caption</span>
+              <span class="mx-4">Cover photo</span>
               <span class=" text-indigo-900 text-3xl"> <Fa icon={faImage} /></span>
             </div>
-            <input id="caption" on:change={getCaption} accept="image/*" type="file" hidden />
+            <input id="banner" on:change={getBanner} accept="image/*" type="file" hidden />
           </label>
         </div>
       </div>
-      <!-- Caption preview -->
-      {#if captionPreview }
+      <!-- banner preview -->
+      {#if bannerPreview }
         <div class="w-full h-48 mb-3 flex justify-center px-2">
-          <img src={captionPreview} alt="caption"
+          <img src={bannerPreview} alt="banner"
             class="h-full max-h-full rounded border max-w-md"
           />
         </div>        
@@ -166,15 +159,18 @@
       <div>
         <div class="text-lg flex justify-between font-medium ml-2 mb-1">
           <span>CONTENT*</span> 
-          <!-- Insert table button part -->
-          <button class="insert" on:click={addTable}>
-            <span class="flex items-center">
-              <span class="mr-2">Insert table </span> <Fa icon={faTable} />
-            </span>            
-          </button>
+
+          <span class="flex items-center mr-2">          
+            {#if !saving}
+              <span class=" text-green-500"><Fa icon={faCheck} /></span>
+            {:else }
+              <span class="mr-4 animate-pulse">Saving...</span>
+              <span class="animate-spin text-indigo-900"> <Fa icon={faSpinner} /> </span>
+            {/if}
+          </span> 
         </div>
-        <!-- Quill container -->
-        <div id="editor"></div>
+        <!-- Suneditor container -->
+        <div class="w-full max-w-full" ><Editor bind:content /></div>
         <!-- Validation message -->
         {#if descriptionError}
           <div class="errors">
@@ -182,6 +178,12 @@
           </div>
         {/if}
       </div>
+      <!-- Response message -->
+      {#if responseData}
+        <div class="mb-3" class:success={responseData.staus} class:errors={!responseData.staus}>
+            {responseData.message}
+        </div>        
+      {/if}
 
       <!-- Create button container -->
       <div class="flex my-6 px-2 justify-end">
@@ -192,7 +194,6 @@
             {:else }
               <span class="mr-4">Processing...</span>
               <span class="animate-spin"> <Fa icon={faSpinner} /> </span>
-
             {/if}
           </div>
         </button>        
@@ -208,16 +209,16 @@
   }
 
   .inputs{
-    font-size: 16px;
+    font-size: 18px;
     font-family: roboto;
-    line-height: 28px;
+    line-height: 32px;
     @apply rounded-md w-full py-1 px-2 border transition duration-500 transform 
     delay-100 focus:ring-1 ring-indigo-900 focus:border-indigo-900 ring-opacity-40 
     hover:border-indigo-200 hover:ring-opacity-10;
   }
 
   .label{
-    @apply block pl-1 font-medium;
+    @apply block pl-1 mb-1 font-medium;
   }
 
   .button{
@@ -225,7 +226,11 @@
     hover:shadow
   }
   .errors{
-    @apply text-red-400 text-center text-base
+    @apply text-red-400 text-center text-base;
+  }
+
+  .success{
+    @apply text-center text-base;
   }
 
   .insert{

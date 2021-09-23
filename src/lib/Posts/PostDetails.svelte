@@ -4,15 +4,8 @@
   import PostOnwer from "./PostOnwer.svelte";
 
   export let post;
-  let quill;
-
-
+  let content='';
   onMount(()=>{
-    if(window.Quill){
-      quill = new Quill("#details",  {modules:{toolbar:false}, theme:'bubble', readOnly:true});
-      quill.setContents(JSON.parse(post.content))
-        // let vals = quill.root.innerHTML;
-    }
   })
 
 
@@ -28,16 +21,20 @@
     })
   }
 
+ 
+
 
 </script>
 
 
 <svelte:head> 
-  <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
-  <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
   
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+  <!-- <script src="https://cdn.tiny.cloud/1/s3aazzg9dsaiza991zpnlsi7to0d5a2lz1sxem0j572jl3d1/tinymce/5/tinymce.min.js"
+   referrerpolicy="origin"></script> -->
+
 </svelte:head>
+<div sveltekit:navigation-start></div>
 <div>  
   <div class="flex justify-center">
     <div class="w-full max-w-3xl px-3 xs:px-8 sm:px-16">
@@ -58,10 +55,9 @@
           <div class="sub">{post.description}</div>
         </div>
 
-        <!-- Quill content container -->
-        <div id="details"></div>
-      </div>
-      
+        <!-- post content container -->
+        <div class="my-10 sun-editor-editable"> {@html content }</div>
+      </div>      
       <div class="block md:hidden">
         <PostOnwer bind:user />
       </div>

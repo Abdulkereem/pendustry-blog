@@ -27,7 +27,10 @@
 	"type": "module",
 	"dependencies": {
 		"@fortawesome/free-solid-svg-icons": "^5.15.4",
+		"axios": "^0.21.4",
+		"katex": "^0.13.18",
 		"node-sass": "^6.0.1",
+		"suneditor": "^2.41.3",
 		"svelte-fa": "^2.3.3"
 	}
 }
