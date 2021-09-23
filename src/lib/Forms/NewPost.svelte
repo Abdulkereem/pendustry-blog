@@ -28,7 +28,7 @@
   import { faImage, faTable, faSpinner, faCheck } from '@fortawesome/free-solid-svg-icons';
   import { API } from './../../Utilities/jsons/endpoints.json';
   import axios from 'axios';
-  import Editor from "$lib/Posts/Editor.svelte";
+  import Editor from "$lib/Forms/Editor.svelte";
 
 
   let content='';

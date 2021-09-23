@@ -18,7 +18,7 @@
 <div class="cover">
   <hr class="hr" />
   <div class="post-cover">
-    {#each tempPost as post,i (i)  }
+    {#each tempPost as post,i (i)}
       <div class="map">
         <!-- caption container -->
         <div class="caption-container">
@@ -63,27 +63,26 @@
 <style lang="scss">
 
   .cover{
-    @apply w-full block py-2 px-9 xs:px-14 sm:px-6 lg:px-14
+    @apply w-full block;
   }
 
   .hr{
-    @apply my-10
+    @apply my-3
   }
   
   .post-cover{
-    @apply w-full block sm:grid  grid-cols-1 gap-3 md:gap-4 lg:gap-5 
+    @apply w-full block lg:grid lg:grid-cols-2 md:gap-3 lg:gap-4; 
     xs:grid-cols-2;
-
   }
 
   .map{
-    // @apply grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3;
-    @apply mb-5 sm:mb-2 transition ease-in-out delay-150 duration-500 grid grid-cols-1 lg:grid-cols-3 border 
-    shadow-sm rounded transform hover:scale-105 hover:bg-white hover:shadow;
+    @apply mb-5 lg:mb-3 transition ease-in-out delay-150 duration-500 
+    grid grid-cols-1 border shadow-sm rounded transform hover:scale-105 
+    hover:bg-white hover:shadow;
   }
 
   .caption-container{
-    @apply h-52 sm:h-52 md:h-56 lg:h-full relative lg:w-full bg-red-50 lg:flex items-stretch ;
+    @apply h-52 sm:h-52 md:h-56 relative w-full;
   }
 
   .caption{
@@ -91,7 +90,7 @@
   }
 
   .lg-texts{
-    @apply lg:col-span-2 p-5 grid place-content-between place-items-stretch;
+    @apply place-items-stretch;
   }
 
   .title{

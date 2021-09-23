@@ -1,4 +1,4 @@
-export const mgs = ['im1', 'im2', 'im3', 'im4', 'im5'];
+export const mgs = ['/im1', '/im2', '/im3', '/im4', '/im5'];
 export const details = [
   "5 web APIs that",// add mobile functionality to your project",
   "Building a random number generator with JavaScript and Node.js",

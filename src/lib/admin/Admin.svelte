@@ -1,5 +1,6 @@
 
 <script context="module">
+	import AdminPostsPreview from './AdminPostsPreview.svelte';
   import {API} from './../../Utilities/jsons/endpoints.json'
   export async function load({page, fetch, session, stuff}){
     const url = `${API}/get-user/${page.params.pbk}`;
@@ -50,13 +51,13 @@
           <button class="button">
             <a class="link" href="#" >
               <span class="text-indigo-800 text-xl"><Fa icon={faBookmark} /></span>
-               <span class="ml-2">Published </span> 
+               <span class="ml-2">Published</span> 
             </a>
           </button>
         </div>
         <div class="pl-1">
           <button class="button">
-            <a class="link -ml-5" href="#" >
+            <a class="link" href="#" >
               <span class="text-indigo-800 text-xl"><Fa icon={faFile} /></span>
                <span class="ml-2">Draft </span> 
             </a>            
@@ -79,7 +80,7 @@
   <!-- Articles -->
   <div class="articles">
 
-    {#if !articles}
+    {#if articles}
       <div class="relative">
         <div class="empty">
           <span class="icon-span">
@@ -96,9 +97,7 @@
       </div>
     {:else}
       <div>
-        {#each Array(50).fill(0).map((e,i)=>e+i) as article,index (index) }
-          <div>{article}</div>
-        {/each}
+        <AdminPostsPreview />
       </div>
     {/if}
   </div>
