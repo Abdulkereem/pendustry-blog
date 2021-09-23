@@ -1,12 +1,12 @@
 <script context="module">
-  // your script goes here
+  
 </script>
 <script >
-import Admin from "$lib/admin/Admin.svelte";
+  import Admin from "$lib/Admin/Admin.svelte";
 
 
 </script>
-<div>
+<div class="w-full max-w-full">
   <Admin />
 
 </div>

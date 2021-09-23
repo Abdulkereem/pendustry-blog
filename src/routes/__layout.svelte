@@ -25,7 +25,7 @@
 
 <AppBar bind:barHeight bind:mobile />
 
-<div class="bg-gray-50" style="margin-top: {barHeight+10}px;">
+<div class="bg-gray-50 w-full max-w-full" style="margin-top: {barHeight+10}px;">
   <button on:click={()=>{ sides(); show = true}}>Modal</button>
   <Modal bind:show bind:side body_class="tt" >
     <div style="w-full h-52">Here</div>
@@ -36,8 +36,6 @@
     <div style="w-full h-52">Here</div>
     Here
   </Modal>
-<!-- <Comment />
-<PostDetails post={{title:'', fullname:'',about:'', content:'{}'}} /> -->
   <slot></slot>
 
 </div>
@@ -54,6 +52,9 @@
     background-color: red;
   }
   *{
-    @apply box-border
+    @apply box-border 
+  }
+  body{
+    @apply bg-gray-50
   }
 </style>
