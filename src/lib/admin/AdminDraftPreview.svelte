@@ -2,8 +2,10 @@
 <script>
 	import NoArticleTemplate from './NoArticleTemplate.svelte';
 	import { fillMage } from './../../Utilities/Constants/posts.js';
+import Fa from 'svelte-fa/src/fa.svelte';
+import { faImage } from '@fortawesome/free-solid-svg-icons';
   let date = new Date();
-  export let posts;
+  export let drafts;
   let tempPost = Array(20).fill(0).map((e,i)=>{
     return {
       item: e+i,
@@ -17,44 +19,34 @@
 </script>
 
 <div class="cover">
-  {#if !posts}
+  {#if drafts}
     <!-- No post message -->
-    <NoArticleTemplate message="You're yet to publish an article" />
+    <NoArticleTemplate message="You have no article saved to Draft" />
   {:else}
     <div class="post-cover">
       {#each tempPost as post,i (i)}
         <div class="map">
           <!-- caption container -->
           <div class="caption-container">
-            <a href="/{post.title}">
-              <img class="caption" src="{post.caption}.png" alt="post" />
-            </a>              
+            <img class="caption" src="{post.cover?post.cover:'/ino'}.png" alt="post" />
           </div>
           <!-- content container -->
           <div class="lg-texts">
             <!-- title -->
             <div class="self-start">
-              <a href="/{post.title}" class="title ">{post.title}</a>
+              {post.title? post.title: 'No title'}
             </div>
             <!-- summary -->
-            <div class="sub my-3 self-center">
-              {post.summary}
+            <div class="sub my-3">
+              {post.summary? post.summary: 'No summary'}
             </div>
-            <!-- User details -->
-            <div class="flex self-end">
-              <div>
-                <a href="#">
-                  <img src="{post.caption}.png" alt="owner" class="h-10 w-10 rounded-full" />
-                </a>
-              </div>
-              <div class="text-sm leading-4 ml-2">
-                <div class="text-opacity-80 cursor-pointer">
-                  <a href="#">{post.author} {post.item}</a>
-                </div>
-                <div class="text-opacity-60 ">
-                  {post.date}
-                </div>
-              </div>
+            <!-- Date -->
+            <div class="text-opacity-60 ">
+              {post.date}
+            </div>
+            <!-- content -->
+            <div>
+              {post.content?post.content:'No content'} 
             </div>
           </div>
           <!-- / summary end -->
@@ -90,13 +82,14 @@
   }
 
   .lg-texts{
-    @apply place-items-stretch;
+    @apply flex flex-col justify-between place-items-stretch p-5 ;
   }
 
   .title{
     @apply font-bold text-xl text-opacity-80 leading-6
   }
   .sub{
+    
     line-height: 21px;
     color: #888888;
     font-size: 14px;
