@@ -1,9 +1,12 @@
-<script context="module">
-  // your script goes here
-</script>
 <script>
+  import NewPost from "$lib/Forms/NewPost.svelte";
+
+  
 
 </script>
-<div>
-  
+<div>  
+  <NewPost />
 </div>
+<style lang="scss">
+
+</style>

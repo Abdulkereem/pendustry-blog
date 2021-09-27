@@ -2,11 +2,10 @@
 <script>
 	import NoArticleTemplate from './NoArticleTemplate.svelte';
 	import { fillMage } from './../../Utilities/Constants/posts.js';
-import Fa from 'svelte-fa/src/fa.svelte';
-import { faImage } from '@fortawesome/free-solid-svg-icons';
+  import Fa from 'svelte-fa/src/fa.svelte';
   let date = new Date();
   export let drafts;
-  let tempPost = Array(20).fill(0).map((e,i)=>{
+  let tempDraft = Array(20).fill(0).map((e,i)=>{
     return {
       item: e+i,
       caption: fillMage(i,0),
@@ -24,29 +23,29 @@ import { faImage } from '@fortawesome/free-solid-svg-icons';
     <NoArticleTemplate message="You have no article saved to Draft" />
   {:else}
     <div class="post-cover">
-      {#each tempPost as post,i (i)}
+      {#each tempDraft as draft,i (i)}
         <div class="map">
           <!-- caption container -->
           <div class="caption-container">
-            <img class="caption" src="{post.cover?post.cover:'/ino'}.png" alt="post" />
+            <img class="caption" src="{draft.cover?draft.cover:'/ino'}.png" alt="draft" />
           </div>
           <!-- content container -->
           <div class="lg-texts">
             <!-- title -->
             <div class="self-start">
-              {post.title? post.title: 'No title'}
+              {draft.title? draft.title: 'No title'}
             </div>
             <!-- summary -->
             <div class="sub my-3">
-              {post.summary? post.summary: 'No summary'}
+              {draft.summary? draft.summary: 'No summary'}
             </div>
             <!-- Date -->
             <div class="text-opacity-60 ">
-              {post.date}
+              {draft.date}
             </div>
             <!-- content -->
             <div>
-              {post.content?post.content:'No content'} 
+              {draft.content?draft.content:'No content'} 
             </div>
           </div>
           <!-- / summary end -->

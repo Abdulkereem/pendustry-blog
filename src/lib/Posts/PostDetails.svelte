@@ -1,4 +1,4 @@
-<script>
+ <script>
 	import { toFullMonth } from './../../Utilities/Constants/times.js';
   import { onMount } from "svelte";
   import PostOnwer from "./PostOnwer.svelte";
