@@ -4,11 +4,9 @@
   import PostOnwer from "./PostOnwer.svelte";
 
   export let post;
-  let content='';
+  
   onMount(()=>{
   })
-
-
   let user={
     fullname: 'Gert Svaiko',
     profilepicture: 'im1.pgn',
@@ -17,7 +15,26 @@
 
   $: if(post){
     onMount(()=>{
-      post={...post, date: toFullMonth(post.date)}
+      let content='';
+      let readTime=1;
+      try {
+        content = JSON.parse(post.content);
+      } catch (error) {
+        content = post.content
+      }
+      let pureContent = content.toString().replace(/<img.*">/g, ''); 
+      pureContent = pureContent.replace(/<\d*\S.*">/g, '');
+      // pureContent = pureContent.replace(/(<\/.*>(?!\d))/g, '');
+      // console.log(pureContent);     
+      // console.log(pureContent);
+
+      // console.log(pureContent);
+      // console.log(pureContent);
+      // pureContent = pureContent.replace(/<\/p>/g, '');
+      // console.log(pureContent);      
+      readTime=Math.floor(pureContent.split(' ').length/220);
+      readTime = readTime?readTime:1;
+      post={...post, dateposted: toFullMonth(post.dateposted), content, readTime}
     })
   }
 
@@ -45,18 +62,18 @@
       <div>
         <!-- head section -->
         <div>
-          <div class="title">{post.title}</div>
-          <div class="date"> { post.date}<span class="mx-2">-</span> {post.duration} min read</div>
-          {#if post.caption}
-            <div class="caption">
-              <img src={post.caption} alt="caption" />            
+          <div class="title">{post.Title}</div>
+          <div class="date"> { post.dateposted}<span class="mx-2">-</span> {post.readTime} min read</div>
+          {#if post.banner}
+            <div class="banner">
+              <img src="https://{post.banner}" alt="banner" />            
             </div>            
           {/if}
-          <div class="sub">{post.description}</div>
+          <div class="sub">{post.description? post.description: 'Description is needed here'}</div>
         </div>
 
         <!-- post content container -->
-        <div class="my-10 sun-editor-editable"> {@html content }</div>
+        <div class="my-10 sun-editor-editable"> {@html post.content }</div>
       </div>      
       <div class="block md:hidden">
         <PostOnwer bind:user />

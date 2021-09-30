@@ -84,13 +84,14 @@
     const stringifiedContent = JSON.stringify(content);
     localStorage.con = stringifiedContent;
     formdata.append('title', title);
-    formdata.append('description', description);
+    // formdata.append('description', description);
     formdata.append('banner', banner);
     formdata.append('content', stringifiedContent);
     formdata.append('pbk', '1234');
-    const head={"Content-Type": "multipart/form-data"}
+    // const head={"Content-Type": "multipart/form-data"}
+    // {headers: head}
     try {
-      let reponse = await axios.post(`${API}createPost`, formdata, {headers: head});
+      let reponse = await axios.post(`${API}createPost`, formdata);
       data = await reponse.json();
       console.log(data);
       responseData = {staus: 1, message: 'Content successfuly published'};
@@ -171,8 +172,9 @@
         </div>
         <!-- Suneditor container -->
         <div class="w-full max-w-full" ><Editor bind:content /></div>
+
         <!-- Validation message -->
-        {#if descriptionError}
+        {#if contentError}
           <div class="errors">
             Content is required
           </div>
@@ -226,7 +228,7 @@
     hover:shadow
   }
   .errors{
-    @apply text-red-400 text-center text-base;
+    @apply text-red-800 mx-1 text-center text-base bg-red-200;
   }
 
   .success{

@@ -1,8 +1,8 @@
 <script>
   import "../app.postcss";
   import AppBar from "$lib/AppBar.svelte";
-  import PostDetails from "$lib/Posts/PostDetails.svelte";
-  import Comment from "$lib/Forms/Comment.svelte";
+  // import PostDetails from "$lib/Posts/PostDetails.svelte";
+  // import Comment from "$lib/Forms/Comment.svelte";
   import Modal from "$lib/Modal.svelte";
 
   let barHeight;

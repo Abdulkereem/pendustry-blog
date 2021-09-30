@@ -1,19 +1,16 @@
 <script context="module">
-  import { details, POST } from './../Utilities/Constants/posts.js';
-  export async function load({ page, context }) {
-    
-    // console.log(page.params.title)
-    // console.log('tag', context)
-    // if (res.ok) {
-      let {title} = page.params;
-      let index = details.findIndex((e)=>e == title);
+  import {API} from './../Utilities/JSONS/endpoints.json';
 
-      if(index > -1){
-      const post = POST(index)
-      // console.log('found', post);
+  export async function load({ page, fetch }) {
+      let {title} = page.params;
+      let url = `${API}article/${title}`
+      let res = await fetch(url);
+      if(res.ok){
+        let result = await res.json();
+        console.log(result);
       return {
         props:{
-          post,
+          post: result.article
         }
       }
     }

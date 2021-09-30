@@ -39,7 +39,7 @@
         </div>
         <div class="pl-1">
           <button class="button">
-            <a class="link" href="{path}/create-article" >
+            <a sveltekit:prefetch class="link" href="{path}/create-article" >
               
               <span class="text-indigo-800 text-xl"><Fa icon={faPen} /> </span>
               <span class="ml-2">Create new </span> 
@@ -52,7 +52,7 @@
 <style lang="scss">
 
   .profile{
-    @apply block rounded-md h-full ml-0 sm:ml-5 md:ml-12 lg:ml-20 shadow 
+    @apply block rounded-md h-full ml-0 sm:ml-5 md:ml-12 lg:ml-20 shadow-md
     border-indigo-200 border transition duration-500 hover:shadow-md 
     hover:border-indigo-300 py-2 sm:pb-6;
   }
