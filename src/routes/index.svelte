@@ -1,16 +1,22 @@
 <script context="module">
-  import {API} from './../Utilities/JSONS/endpoints.json';
+  import {LAPI} from './../Utilities/JSONS/endpoints.json';
    export async function load({page, fetch}){
 
-    let url = `${API}articles`
+    let url = `${LAPI}published-articles`
     let response = await fetch(url);
     if (response.ok){
       let result = await response.json();
       // console.log(Object.keys(result));
-      console.log(result);
+      let posts = result.articles.map(data=>{
+        let goto = data.title.replaceAll(' ','-').replaceAll('--', '-');
+        goto = `${goto}/${data.id}`;
+        return {...data, goto}
+      })
+      console.log(posts);
       return{
         props:{
-          posts: result.articles
+          posts,
+          pagination: result.pagination
         }
       }
     }else{
@@ -25,10 +31,11 @@
 <script>
   import Posts from "$lib/Posts/Posts.svelte";
   export let posts;
+  export let pagination
 
 
 
 </script>
 <div>
-  <Posts posts={posts}/>
+  <Posts pagination={pagination} posts={posts}/>
 </div>

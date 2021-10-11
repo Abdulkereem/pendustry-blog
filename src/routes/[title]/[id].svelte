@@ -2,7 +2,8 @@
   import {API} from './../Utilities/JSONS/endpoints.json';
 
   export async function load({ page, fetch }) {
-      let {title} = page.params;
+      // console.log(page.params);
+      let {title, id} = page.params;
       let url = `${API}article/${title}`
       let res = await fetch(url);
       if(res.ok){
@@ -10,7 +11,9 @@
         console.log(result);
       return {
         props:{
-          post: result.article
+          post: result.article,
+          goto: `${title}/${id}`,
+          id,
         }
       }
     }
@@ -28,6 +31,8 @@
   // import { toFullMonth } from './../Utilities/Constants/times.js';
   import { onMount } from 'svelte';
   export let post;
+  export let id;
+  export let goto;
 
   $: if(post) {
     console.log(post);  
@@ -41,8 +46,8 @@
   }
 </script>
 <div>
-   <PostDetails post={post} />
-   <Comment />
+   <PostDetails post={post}  goto={goto} />
+   <Comment id={id} />
 </div>
 <style lang="scss">
 

@@ -1,9 +1,10 @@
 
 export const zoned=(time)=>{
   if(!window || !window.luxon || !time) return '';
-  // time="2021-09-29 09:16:52.230679";
+  time=time.replace('Z','');
   const local = luxon.DateTime.local();
-  let sq = luxon.DateTime.fromSQL(time);
+  // let sq = luxon.DateTime.fromSQL(time);
+  let sq = luxon.DateTime.fromISO(time);
    const ms = luxon.DateTime.fromISO(sq, {zone: 'Africa/Accra'});
   const rezoned = ms.setZone(local.zoneName);
   console.log({rezoned, 'string': rezoned.toString()});

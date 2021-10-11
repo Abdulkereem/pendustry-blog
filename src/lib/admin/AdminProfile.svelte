@@ -10,13 +10,13 @@
     <div class="profile">
       <!-- Image -->
       <div class="flex justify-center p-4">
-        <img class="profile-dp"  src="/im2.png" alt="user" />
+        <img class="profile-dp"  src="{profile.profilePic}" alt="user" />
       </div>
       <!-- MenuListBox -->
       <div class="px-5">
         <!-- Admin Name -->
         <div class="text-medium font-medium pl-2">NAME:</div>
-        <div class="pl-3">Full Name</div>
+        <div class="pl-3 text-lg text-opacity-40">{profile.accName}</div>
         <hr class="my-2" />
 
         <!-- Article types -->
@@ -25,7 +25,7 @@
           <button class="button">
             <a class="link" href="{path}/articles" >
               <span class="text-indigo-800 text-xl"><Fa icon={faBookmark} /></span>
-               <span class="ml-2">Published 100000000</span> 
+               <span class="ml-2">Published {profile.totalPublished}</span> 
             </a>
           </button>
         </div>
@@ -33,13 +33,13 @@
           <button class="button">
             <a class="link" href="{path}/drafts" >
               <span class="text-indigo-800 text-xl"><Fa icon={faFile} /></span>
-               <span class="ml-2">Draft </span> 
+               <span class="ml-2">Draft {profile.totalDraft} </span> 
             </a>            
           </button>
         </div>
         <div class="pl-1">
           <button class="button">
-            <a sveltekit:prefetch class="link" href="{path}/create-article" >
+            <a sveltekit:prefetch class="link" href="{path}/editor" >
               
               <span class="text-indigo-800 text-xl"><Fa icon={faPen} /> </span>
               <span class="ml-2">Create new </span> 

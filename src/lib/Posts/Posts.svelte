@@ -1,20 +1,23 @@
 
 <script>
 	import { toFullMonth } from './../../Utilities/Constants/times.js';
-	import { fillMage } from './../../Utilities/Constants/posts.js';
+	// import { fillMage } from './../../Utilities/Constants/posts.js';
   import { onMount } from 'svelte';
-  let date = new Date();
+  import {banner_url, dp_url} from './../../Utilities/JSONS/endpoints.json'
+  // let date = new Date();
+  // let tempPost = Array(20).fill(0).map((e,i)=>{
+    //   return {
+      //     item: e+i,
+      //     banner: fillMage(i,0),
+      //     title: fillMage(i,1),
+      //     updatedAt: `${date.getFullYear()}/${date.getMonth()}/${date.getDate()}`,
+      //     author: 'Firstname and Lastname',
+      //     description: fillMage(i,2)
+      //   }
+      // })
+
   export let posts;
-  let tempPost = Array(20).fill(0).map((e,i)=>{
-    return {
-      item: e+i,
-      banner: fillMage(i,0),
-      Title: fillMage(i,1),
-      dateposted: `${date.getFullYear()}/${date.getMonth()}/${date.getDate()}`,
-      author: 'Firstname and Lastname',
-      summary: fillMage(i,2)
-    }
-  })
+
   let _toMonth;
   onMount(()=>{
     _toMonth = toFullMonth;
@@ -25,37 +28,37 @@
 <div class="cover">
   <hr class="hr" />
   <div class="post-cover">
-    {#each posts || tempPost as post,i (i)  }
+    {#each posts as post,i (i)  }
       <div class="map">
         <!-- banner container -->
         <div class="banner-container">
-          <a href="/{post.publicKey}">
-            <img class="banner" src="https://{post.banner}" alt="post" />
+          <a href="/{post.goto}">
+            <img class="banner" src="{banner_url}{post.banner}" alt="post" />
           </a>              
         </div>
         <!-- content container -->
         <div class="lg-texts">
           <!-- Title -->
           <div class="self-start">
-            <a href="/{post.publicKey}" class="Title ">{post.Title}</a>
+            <a href="/{post.goto}" class="Title ">{post.title}</a>
           </div>
           <!-- summary -->
           <div class="sub my-3 self-center">
-            {post.summary}
+            {post.description}
           </div>
           <!-- User details -->
           <div class="flex self-end">
             <div>
               <a href="#">
-                <img src="https://{post.banner}" alt="owner" class="h-10 w-10 rounded-full" />
+                <img src="{dp_url}{post.user.profilePic}" alt="owner" class="h-10 w-10 rounded-full" />
               </a>
             </div>
             <div class="text-sm leading-4 ml-2">
               <div class="text-opacity-80 cursor-pointer">
-                <a href="#">{post.author}</a>
+                <a href="#">{post.user.accName}</a>
               </div>
               <div class="text-opacity-60 ">
-                { _toMonth? _toMonth(post.dateposted): ''}
+                { _toMonth? _toMonth(post.updatedAt): ''}
               </div>
             </div>
           </div>
@@ -90,7 +93,7 @@
   }
 
   .banner-container{
-    @apply h-52 sm:h-52 md:h-56 lg:h-full relative lg:w-full bg-red-50 lg:flex items-stretch ;
+    @apply h-52 sm:h-52 md:h-56 lg:h-full relative lg:w-full lg:flex items-stretch ;
   }
 
   .banner{

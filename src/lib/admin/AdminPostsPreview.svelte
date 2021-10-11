@@ -4,16 +4,16 @@
 	import { fillMage } from './../../Utilities/Constants/posts.js';
   let date = new Date();
   export let posts;
-  let tempPost = Array(20).fill(0).map((e,i)=>{
-    return {
-      item: e+i,
-      caption: fillMage(i,0),
-      title: fillMage(i,1),
-      date: `${date.getFullYear()}/${date.getMonth()}/${date.getDate()}`,
-      author: 'Firstname and Lastname',
-      summary: fillMage(i,2)
-    }
-  })
+  // let tempPost = Array(20).fill(0).map((e,i)=>{
+  //   return {
+  //     item: e+i,
+  //     caption: fillMage(i,0),
+  //     title: fillMage(i,1),
+  //     date: `${date.getFullYear()}/${date.getMonth()}/${date.getDate()}`,
+  //     author: 'Firstname and Lastname',
+  //     summary: fillMage(i,2)
+  //   }
+  // })
 </script>
 
 <div class="cover">
@@ -22,39 +22,29 @@
     <NoArticleTemplate message="You're yet to publish an article" />
   {:else}
     <div class="post-cover">
-      {#each tempPost as post,i (i)}
+      {#each posts as post,i (post.id)}
         <div class="map">
           <!-- caption container -->
           <div class="caption-container">
-            <a href="/{post.title}">
-              <img class="caption" src="{post.caption}.png" alt="post" />
+            <a href="/{post.goto}">
+              <img class="caption" src="{post.banner}" alt="post" />
             </a>              
           </div>
           <!-- content container -->
           <div class="lg-texts">
             <!-- title -->
             <div class="self-start">
-              <a href="/{post.title}" class="title ">{post.title}</a>
+              <a href="/{post.goto}" class="title ">{post.title}</a>
             </div>
-            <!-- summary -->
+            <!-- description -->
             <div class="sub my-3 self-center">
-              {post.summary}
+              {post.description}
             </div>
             <!-- User details -->
             <div class="flex self-end">
-              <div>
-                <a href="#">
-                  <img src="{post.caption}.png" alt="owner" class="h-10 w-10 rounded-full" />
-                </a>
-              </div>
-              <div class="text-sm leading-4 ml-2">
-                <div class="text-opacity-80 cursor-pointer">
-                  <a href="#">{post.author} {post.item}</a>
-                </div>
                 <div class="text-opacity-60 ">
-                  {post.date}
+                  {post.updatedAt}
                 </div>
-              </div>
             </div>
           </div>
           <!-- / summary end -->
@@ -71,8 +61,8 @@
   }
  
   .post-cover{
-    @apply w-full block lg:grid lg:grid-cols-2 md:gap-3 lg:gap-4; 
-    xs:grid-cols-2;
+    @apply w-full block lg:grid xl:grid-cols-2 md:gap-3 lg:gap-4 px-2
+     xs:px-10 lg:px-0;
   }
 
   .map{
@@ -90,7 +80,7 @@
   }
 
   .lg-texts{
-    @apply place-items-stretch;
+    @apply place-items-stretch p-5;
   }
 
   .title{

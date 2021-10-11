@@ -25,9 +25,9 @@
 <script>	
   import { onMount } from "svelte";  
   import Fa from 'svelte-fa/src/fa.svelte';
-  import { faImage, faTable, faSpinner, faCheck } from '@fortawesome/free-solid-svg-icons';
-  import { API } from './../../Utilities/jsons/endpoints.json';
+  import { faImage, faSpinner, faCheck } from '@fortawesome/free-solid-svg-icons';
   import axios from 'axios';
+  import { API } from './../../Utilities/jsons/endpoints.json';
   import Editor from "$lib/Forms/Editor.svelte";
 
 
@@ -80,21 +80,29 @@
     submitting = true;
     responseData= null;
 
-    const formdata = new FormData();
     const stringifiedContent = JSON.stringify(content);
-    localStorage.con = stringifiedContent;
-    formdata.append('title', title);
-    // formdata.append('description', description);
-    formdata.append('banner', banner);
-    formdata.append('content', stringifiedContent);
-    formdata.append('pbk', '1234');
-    // const head={"Content-Type": "multipart/form-data"}
-    // {headers: head}
+    // localStorage.con = stringifiedContent;
+    // const formdata = new FormData();
+    // formdata.append('title', title);
+    // // formdata.append('description', description);
+    // formdata.append('banner', banner);
+    // formdata.append('content', stringifiedContent);
+    // formdata.append('pbk', '1234');
+    const formdata= {
+      title,
+      // description,
+      banner,
+      content: stringifiedContent,
+      pbk: 123,
+    }
+    const head={"content-type": "multipart/form-data"}
+    // let tem = "http://localhost:5555/blog"    
     try {
-      let reponse = await axios.post(`${API}createPost`, formdata);
-      data = await reponse.json();
+      let response = await axios.post(`${API}createPost`, formdata/*, {headers:head}*/);
+      console.log(response);
+      let data = await response.json;
       console.log(data);
-      responseData = {staus: 1, message: 'Content successfuly published'};
+      responseData = {staus: 1, message: 'Content successfully published'};
     } catch (err) {
       console.log(err);
       responseData = {staus: 0, message: 'Oops! Something went wrong.'};

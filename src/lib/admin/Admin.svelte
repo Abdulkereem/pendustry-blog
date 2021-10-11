@@ -5,13 +5,22 @@
   import AdminPostsPreview from './AdminPostsPreview.svelte';
   import AdminDraftPreview from './AdminDraftPreview.svelte';
 
-  export let  articles;
-  let profile;
-  export let tab;
-  let post;
-  let draft;
+  export let  payload;
+  let tab = $page.query.get('tab');
 
   let {path} = $page;
+  $: {
+    
+    
+ 
+      if(!['published','draft'].includes($page.query.get('tab'))){
+        tab = 'published';
+        $page.query.append('tab', tab);
+      }else{
+        tab = $page.query.get('tab');
+      }
+  }
+
   
 import AdminProfile from './AdminProfile.svelte';
 </script>
@@ -19,7 +28,7 @@ import AdminProfile from './AdminProfile.svelte';
   <!--Right Profile box -->
   <div class="profile-cover">
     <!-- Imported profile Component-->
-    <AdminProfile />
+    <AdminProfile profile={payload} />
   </div>
 
   <!-- Articles -->
@@ -37,9 +46,9 @@ import AdminProfile from './AdminProfile.svelte';
     <!-- Tab section -->
     <div>
       {#if tab == 'published'}
-        <AdminPostsPreview  post={post} />
+        <AdminPostsPreview  posts={payload.posts} />
       {:else}
-        <AdminDraftPreview draft={draft} />
+        <AdminDraftPreview drafts={payload.drafts} />
       {/if}
     </div>
   </div>

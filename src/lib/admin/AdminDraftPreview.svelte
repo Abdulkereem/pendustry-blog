@@ -1,51 +1,44 @@
 
 <script>
+	import { page } from '$app/stores';
 	import NoArticleTemplate from './NoArticleTemplate.svelte';
 	import { fillMage } from './../../Utilities/Constants/posts.js';
   import Fa from 'svelte-fa/src/fa.svelte';
-  let date = new Date();
   export let drafts;
-  let tempDraft = Array(20).fill(0).map((e,i)=>{
-    return {
-      item: e+i,
-      caption: fillMage(i,0),
-      title: fillMage(i,1),
-      date: `${date.getFullYear()}/${date.getMonth()}/${date.getDate()}`,
-      author: 'Firstname and Lastname',
-      summary: fillMage(i,2)
-    }
-  })
+
+  
+  let {path} = $page; 
 </script>
 
 <div class="cover">
-  {#if drafts}
+  {#if !drafts}
     <!-- No post message -->
     <NoArticleTemplate message="You have no article saved to Draft" />
   {:else}
     <div class="post-cover">
-      {#each tempDraft as draft,i (i)}
+      {#each drafts as draft,i (draft.id)}
         <div class="map">
           <!-- caption container -->
           <div class="caption-container">
-            <img class="caption" src="{draft.cover?draft.cover:'/ino'}.png" alt="draft" />
+            <img class="caption" src="{draft.banner}" alt="draft" />
           </div>
           <!-- content container -->
           <div class="lg-texts">
             <!-- title -->
-            <div class="self-start">
-              {draft.title? draft.title: 'No title'}
+            <div class="self-start title">
+              {draft.title}
             </div>
-            <!-- summary -->
+            <!-- description -->
             <div class="sub my-3">
-              {draft.summary? draft.summary: 'No summary'}
+              {draft.description}
             </div>
-            <!-- Date -->
-            <div class="text-opacity-60 ">
-              {draft.date}
+            <!--Updated date-->
+            <div class="text-opacity-80 text-gray-900 ">
+              Upadted On: {draft.updatedAt}
             </div>
-            <!-- content -->
-            <div>
-              {draft.content?draft.content:'No content'} 
+            <!-- Created date -->
+            <div class="text-opacity-80 text-gray-900 ">
+             Created On: {draft.createdAt}
             </div>
           </div>
           <!-- / summary end -->
@@ -62,8 +55,8 @@
   }
  
   .post-cover{
-    @apply w-full block lg:grid lg:grid-cols-2 md:gap-3 lg:gap-4; 
-    xs:grid-cols-2;
+    @apply w-full block lg:grid xl:grid-cols-2 md:gap-3 lg:gap-4 px-2 
+     xs:px-10 lg:px-0; xs:grid-cols-2;
   }
 
   .map{

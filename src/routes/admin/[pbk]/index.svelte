@@ -1,38 +1,52 @@
-<script context="module">
-  import {API} from './../../../Utilities/JSONS/endpoints.json';
-  export async function load({page, fetch}){
-    // const url =`${API}/get-user/${page.params.pbk}`;
-		// const res = await fetch(url);
+<script >
+  
+  import { page } from "$app/stores";
+  import Admin from "$lib/Admin/Admin.svelte";
+  import axios from "axios";
+  import { onMount } from 'svelte';
+  import {LAPI, banner_url, dp_url } from './../../../Utilities/JSONS/endpoints.json';
+  import {hToken} from './../../../Utilities/Constants/responseParser';
+  import { toFullMonth } from "./../../../Utilities/Constants/times";
 
-    let tab = page.query.get('tab');
-    if(!tab || !['published','draft'].includes(tab)){
-      tab = 'published';
-      page.query.append('tab', tab);
+  export let payload;
+  let error=false;
+  let loaded=false;
+
+  onMount(async()=>{
+    try {
+      //equilvalent data.data
+      let pbk = $page.params.pbk.split('?')[0];
+      let {data:{data}} = await axios.get(`${LAPI}prefetch-user/${pbk}`, {headers: hToken()});
+      // parse date to readable and set route for view
+      const mapper=(data, type="published")=>{        
+        return data.map(d=>{
+          let createdAt = toFullMonth(d.createdAt);
+          let updatedAt = toFullMonth(d.updatedAt);
+          console.log({createdAt, updatedAt});
+          let banner = `${banner_url}${d.banner}`;
+          if (type=="draft") return  {...d, createdAt, updatedAt, banner};
+          let go = d.title.replaceAll(' ','-').replaceAll('--', '-').toLowerCase();
+          go = `${go}/${d.id}`;
+          return {...d, createdAt, updatedAt, banner, goto:go};
+        })
+      }
+
+      data.posts = mapper(data.published);
+      data.drafts= mapper(data.drafts, 'draft');
+      data.profilePic = `${dp_url}${data.profilePic}`;
+      payload = data;
+      console.log({data});
+    } catch (err) {
+      console.log({err})
+      error = true;
     }
 
-		if (true) {
-      return {
-        props: {
-					// article: await res.json(),
-          tab,
-				}
-			};
-		}
-    
-		return {
-      status: 404,
-      error : new Error(`Could not load page`)
-		};
-  }
-  
+    loaded = true;
+  })
 </script>
-<script >
-  import Admin from "$lib/Admin/Admin.svelte";
+{#if !error && loaded}
+  <div class="w-full max-w-full">
+    <Admin payload={payload} />
 
-  export let tab;
-
-</script>
-<div class="w-full max-w-full">
-  <Admin bind:tab />
-
-</div>
+  </div>
+{/if}
