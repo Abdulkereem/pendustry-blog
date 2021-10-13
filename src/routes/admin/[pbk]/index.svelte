@@ -12,7 +12,7 @@
   let error=false;
   let loaded=false;
 
-  onMount(async()=>{
+  const fetchUser=async()=>{
     try {
       //equilvalent data.data
       let pbk = $page.params.pbk.split('?')[0];
@@ -30,7 +30,7 @@
           return {...d, createdAt, updatedAt, banner, goto:go};
         })
       }
-
+  
       data.posts = mapper(data.published);
       data.drafts= mapper(data.drafts, 'draft');
       data.profilePic = `${dp_url}${data.profilePic}`;
@@ -40,8 +40,12 @@
       console.log({err})
       error = true;
     }
-
+  
     loaded = true;
+  }
+
+  onMount(async()=>{
+     await fetchUser();
   })
 </script>
 {#if !error && loaded}

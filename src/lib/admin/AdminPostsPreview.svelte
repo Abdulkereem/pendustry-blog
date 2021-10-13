@@ -1,19 +1,27 @@
 
 <script>
+	import { hToken } from './../../Utilities/Constants/responseParser.js';
+  import { LAPI } from './../../Utilities/JSONS/endpoints.json';
+	import { axios } from 'axios';
+	import { page } from '$app/stores';
 	import NoArticleTemplate from './NoArticleTemplate.svelte';
 	import { fillMage } from './../../Utilities/Constants/posts.js';
-  let date = new Date();
-  export let posts;
+
+  // let date = new Date();
   // let tempPost = Array(20).fill(0).map((e,i)=>{
-  //   return {
-  //     item: e+i,
-  //     caption: fillMage(i,0),
-  //     title: fillMage(i,1),
-  //     date: `${date.getFullYear()}/${date.getMonth()}/${date.getDate()}`,
-  //     author: 'Firstname and Lastname',
-  //     summary: fillMage(i,2)
-  //   }
+    //   return {
+    //     item: e+i,
+    //     caption: fillMage(i,0),
+    //     title: fillMage(i,1),
+    //     date: `${date.getFullYear()}/${date.getMonth()}/${date.getDate()}`,
+    //     author: 'Firstname and Lastname',
+    //     summary: fillMage(i,2)
+    //   }
   // })
+
+  export let posts;
+  let {path} = $page;
+
 </script>
 
 <div class="cover">
@@ -40,14 +48,29 @@
             <div class="sub my-3 self-center">
               {post.description}
             </div>
-            <!-- User details -->
+            <!-- published date -->
             <div class="flex self-end">
-                <div class="text-opacity-60 ">
-                  {post.updatedAt}
-                </div>
+              <div class="text-opacity-80 text-sm font-medium text-gray-900 ">
+                {post.updatedAt}
+              </div>
             </div>
+            <!-- Action buttons -->
+            <div class="flex justify-between items-center mt-3">
+              <div class="w-full mr-1">
+                <!-- <button class="button " on:click={()=>deleteArticle(post.id)}>                  
+                  <span class="link">Delete </span> 
+                </button> -->
+              </div>
+              <div class="w-full ml-1"> 
+                <button class="button">
+                  <a class="link" href="{path}/articles/{post.id}" sveltekit:prefetch>
+                    View
+                  </a>
+                </button>
+              </div>
+            </div>
+            <!-- / container end -->
           </div>
-          <!-- / summary end -->
         </div>    
       {/each }
     </div>
@@ -90,5 +113,16 @@
     line-height: 21px;
     color: #888888;
     font-size: 14px;
+  }
+
+  .button{
+    @apply border-2 border-indigo-300 w-full rounded mb-2 text-black 
+    transition duration-500 hover:border-indigo-700 hover:rounded
+  }
+
+  .link{
+    @apply w-full flex justify-center items-center leading-8 tracking-wide 
+    transition duration-500 hover:bg-indigo-900 hover:bg-opacity-60
+    hover:text-white
   }
 </style>

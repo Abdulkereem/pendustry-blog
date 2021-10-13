@@ -35,10 +35,10 @@ import AdminProfile from './AdminProfile.svelte';
   <div class="articles">
     <!-- Head tab  on:click={()=>tab='published'}-->
     <div class="grid grid-cols-2">
-      <a href="{path}?tab=published" class:tab={tab=='published'} class="text-center" >
+      <a href="{path}?tab=published" sveltekit:noscroll class:tab={tab=='published'} class="text-center" >
         Published 
       </a>
-      <a  href="{path}?tab=draft" class:tab={tab=='draft'} class="text-center">
+      <a  href="{path}?tab=draft" sveltekit:noscroll class:tab={tab=='draft'} class="text-center">
         Draft
       </a>
     </div>      

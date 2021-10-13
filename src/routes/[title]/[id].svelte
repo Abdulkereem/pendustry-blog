@@ -50,7 +50,7 @@
 </script>
 <div>
    <PostDetails post={post}  goto={goto} />
-   <Comment id={id} />
+   <Comment id={post.id} />
 </div>
 <style lang="scss">
 

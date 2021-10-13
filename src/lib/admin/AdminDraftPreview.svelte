@@ -29,20 +29,18 @@
           <div class="lg-texts">
             <!-- title -->
             <div class="self-start title">
-              <a href="{path}/editor-{draft.id}" sveltekit:prefetch>
-                {draft.title}
-              </a>
+              {draft.title}
             </div>
             <!-- description -->
             <div class="sub my-3">
               { draft.description.slice(0,80)}{draft.description.length > 80 && '...'}
             </div>
             <!--Updated date-->
-            <div class="text-opacity-80 text-sm text-gray-900 ">
+            <div class="text-opacity-80 text-sm font-medium text-gray-900 ">
               Updated On: {draft.updatedAt}
             </div>
             <!-- Created date -->
-            <div class="text-opacity-70 text-sm text-gray-900 ">
+            <div class="text-opacity-70 text-sm font-medium text-gray-900 ">
              Created On: {draft.createdAt}
             </div>
             <!-- Action buttons -->
@@ -56,10 +54,11 @@
               </div>
               <div class="w-full ml-1"> 
                 <button class="button">
-                <a class="link" href="{path}/editor-{draft.id}" sveltekit:prefetch>
-                  Edit
-                </a>
-              </button></div>
+                  <a class="link" href="{path}/editor-{draft.id}" sveltekit:prefetch>
+                    Edit
+                  </a>
+                </button>
+              </div>
             </div>
           </div>
           <!-- / summary end -->

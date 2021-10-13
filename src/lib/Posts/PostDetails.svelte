@@ -8,11 +8,8 @@
   })
 
   $: if(post){
-    onMount(()=>{
-      console.log({content: post.content}, 'comming in');
-      let readTime=1;
-      post={...post,  readTime}
-    })
+    let readTime=1;
+    post={...post,  readTime}
   }
 
  
