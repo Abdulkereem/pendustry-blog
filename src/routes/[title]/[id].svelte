@@ -1,18 +1,22 @@
 <script context="module">
-  import {API} from './../Utilities/JSONS/endpoints.json';
+	import { toFullMonth } from './../../Utilities/Constants/times.js';
+	import { dpPic, bannerPic } from './../../Utilities/Constants/responseParser.js';
+  import {LAPI} from './../../Utilities/JSONS/endpoints.json';
 
   export async function load({ page, fetch }) {
-      // console.log(page.params);
-      let {title, id} = page.params;
-      let url = `${API}article/${title}`
+      console.log(page.params);
+      let {id} = page.params;
+      let url = `${LAPI}single-published/${id}`
       let res = await fetch(url);
       if(res.ok){
         let result = await res.json();
         console.log(result);
+       let post = result.article;
+       post.user.profilePic = dpPic(post.user.profilePic);
+       post.banner = bannerPic(post.banner);
       return {
         props:{
-          post: result.article,
-          goto: `${title}/${id}`,
+          post,
           id,
         }
       }
@@ -20,7 +24,7 @@
     
     // console.log('not found');
 		return {
-      status: 404,
+      status: res.status,
 			error: new Error(`Resources not found`)
 		};
   }
@@ -35,12 +39,11 @@
   export let goto;
 
   $: if(post) {
-    console.log(post);  
-    onMount(()=>{
-      
-    // post = {...post, date: toFullMonth(post.date)}
-    //  console.log(toFullMonth(post.date));
-
+    console.log({post});  
+    onMount(()=>{      
+      post.createdAt = toFullMonth(post.createdAt);
+      post.updatedAt = toFullMonth(post.updatedAt);
+      post.comments = post.comments.map(c=>({...c,createdAt:toFullMonth(c.createdAt)}))
     })  
 
   }

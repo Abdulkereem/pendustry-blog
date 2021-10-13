@@ -7,7 +7,7 @@ export const zoned=(time)=>{
   let sq = luxon.DateTime.fromISO(time);
    const ms = luxon.DateTime.fromISO(sq, {zone: 'Africa/Accra'});
   const rezoned = ms.setZone(local.zoneName);
-  console.log({rezoned, 'string': rezoned.toString()});
+  // console.log({rezoned, 'string': rezoned.toString()});
   return rezoned;  
 }
 

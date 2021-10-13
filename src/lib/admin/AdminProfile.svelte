@@ -16,7 +16,7 @@
       <div class="px-5">
         <!-- Admin Name -->
         <div class="text-medium font-medium pl-2">NAME:</div>
-        <div class="pl-3 text-lg text-opacity-40">{profile.accName}</div>
+        <div class="pl-3 text-lg text-opacity-40">{profile.accName.toUpperCase()}</div>
         <hr class="my-2" />
 
         <!-- Article types -->
@@ -39,7 +39,7 @@
         </div>
         <div class="pl-1">
           <button class="button">
-            <a sveltekit:prefetch class="link" href="{path}/editor" >
+            <a sveltekit:prefetch class="link" href="{path}/editor-new" >
               
               <span class="text-indigo-800 text-xl"><Fa icon={faPen} /> </span>
               <span class="ml-2">Create new </span> 

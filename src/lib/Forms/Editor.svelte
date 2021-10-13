@@ -43,7 +43,8 @@
   
           // editor = editor.create('sample', {});
         editor.onChange = function (contents, core) {
-          //  console.log('onChange', contents) 
+          
+           console.log('onChange', contents) 
           content = contents;
         }
       }  
@@ -61,12 +62,11 @@
       if(!editor){
        return loadEditor()
       }
-      clearInterval(interval);
-    }, 500)
 
-    // if(!editor){
-    //   setTimeout(()=>loadEditor(), 1000)    
-    // }
+      clearInterval(interval);
+      console.log('inter');
+      content && editor.setContents(content);
+    }, 500)
 
   })
 
@@ -86,6 +86,7 @@
 </svelte:head>
 <div class="w-full max-w-full min-w-full flex items-stretch">
   <textarea class="place-self-stretch justify-self-stretch" 
-  style="width: 100%; min-width-100%" id="sample" >
+    style="width: 100%; min-width-100%" id="sample" 
+  >
 </textarea>
 </div>

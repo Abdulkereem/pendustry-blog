@@ -1,36 +1,14 @@
-<script context="module">
-	/**
-	 * @type {import('@sveltejs/kit').Load}
-	 */
-	export async function load({ page, fetch, session, stuff }) {
-		// const url = `/blog/${page.params.slug}.json`;
-		// const res = await fetch(url);
-    console.log(page);
-
-		if (false) {
-			return {
-				props: {
-					content:''
-				}
-			};
-		}
-
-		return {
-			status: 404,
-			error: new Error(`Could not load`)
-		};
-	}
-</script>
 
 <script>	
+	import { bannerPic, hToken } from './../../Utilities/Constants/responseParser.js';
   import { onMount } from "svelte";  
   import Fa from 'svelte-fa/src/fa.svelte';
   import { faImage, faSpinner, faCheck } from '@fortawesome/free-solid-svg-icons';
   import axios from 'axios';
-  import { API } from './../../Utilities/jsons/endpoints.json';
+  import { LAPI } from './../../Utilities/jsons/endpoints.json';
   import Editor from "$lib/Forms/Editor.svelte";
 
-
+  export let draft;
   let content='';
   let bannerPreview=null;  
   let title="First Article";
@@ -38,16 +16,25 @@
   let description ="First article by beyond";
   let descriptionError = false;
   let banner;
+  let bannerError = false;
   let contentError = false;
   let submitting= false;
   let responseData;
   let saving= false;
 
-
+  $: if(draft) {
+    onMount(()=>{
+      title = draft.title;
+      description = draft.description;
+      bannerPreview = bannerPic(draft.banner);
+      content = draft.content;
+    })
+  }
 
   const getBanner=({target:{files}})=>{
     banner = files[0];
     bannerPreview = URL.createObjectURL(banner);
+    bannerError = false;
   }
 
   const validate=()=>{
@@ -66,6 +53,7 @@
   }
 
  $: if(content.trim()){
+   console.log('\n\n changes ',{content}, '\n\n chnges');
     (async()=>{
       saving = true;
       await setTimeout(()=>saving = false, 500)
@@ -77,37 +65,34 @@
   const submit=async()=>{
     if(submitting) return;
     if(!validate()) return;
-    submitting = true;
-    responseData= null;
-
-    const stringifiedContent = JSON.stringify(content);
-    // localStorage.con = stringifiedContent;
-    // const formdata = new FormData();
-    // formdata.append('title', title);
-    // // formdata.append('description', description);
-    // formdata.append('banner', banner);
-    // formdata.append('content', stringifiedContent);
-    // formdata.append('pbk', '1234');
-    const formdata= {
-      title,
-      // description,
-      banner,
-      content: stringifiedContent,
-      pbk: 123,
+    if(!draft && !banner){
+      return bannerError = true;
     }
-    const head={"content-type": "multipart/form-data"}
-    // let tem = "http://localhost:5555/blog"    
+    submitting = true;
+    responseData= null; 
+    let data;
+    const url = draft? `${LAPI}update-draft/${draft.id}`:`${LAPI}post-article`;
+    const method= draft?"PUT":"POST";
+    if(!draft){
+      data = new FormData();
+      data.append('title', title);
+      data.append('description', description);
+      data.append('banner', banner);
+      data.append('content', content);
+    }else{
+      data={ description, title, content }
+    }
+    console.log({content}, 'leaving');
+    // let headers= {...hToken()};
+    // if(!draft) headers['content-type'] ='multipart/form-data'}
     try {
-      let response = await axios.post(`${API}createPost`, formdata/*, {headers:head}*/);
+      let response = await axios({url, method, data,  headers:hToken()});
       console.log(response);
-      let data = await response.json;
-      console.log(data);
       responseData = {staus: 1, message: 'Content successfully published'};
     } catch (err) {
-      console.log(err);
+      console.log({err});
       responseData = {staus: 0, message: 'Oops! Something went wrong.'};
     }
-
     submitting = false;
   }
   
@@ -155,6 +140,11 @@
             <input id="banner" on:change={getBanner} accept="image/*" type="file" hidden />
           </label>
         </div>
+        {#if bannerError}
+            <div class="errors">
+              Upload cover image
+            </div>
+          {/if}
       </div>
       <!-- banner preview -->
       {#if bannerPreview }
@@ -179,7 +169,7 @@
           </span> 
         </div>
         <!-- Suneditor container -->
-        <div class="w-full max-w-full" ><Editor bind:content /></div>
+        <div class="w-full max-w-full" ><Editor  bind:content /></div>
 
         <!-- Validation message -->
         {#if contentError}
@@ -200,7 +190,7 @@
         <button class="button" on:click={submit}>
           <div class="flex justify-center items-center">
             {#if !submitting}
-              <span class="">Create</span>
+              <span class="">{draft? 'Update':'Create'}</span>
             {:else }
               <span class="mr-4">Processing...</span>
               <span class="animate-spin"> <Fa icon={faSpinner} /> </span>

@@ -1,4 +1,4 @@
-
+import { dp_url, banner_url } from './../JSONS/endpoints.json';
 export const parseError=(err)=>{
   console.log({err});
   if(err && err.response && err.response.data && err.response.data.message) return err.response.data.message;
@@ -44,6 +44,14 @@ export const getAU=()=>{
   } catch (error) {
     return window.location.replace('/account/login');
   }
+}
+
+export const bannerPic=(data)=>{
+  return `${banner_url}${data}`;
+}
+
+export const dpPic=(data)=>{
+  return `${dp_url}${data}`;
 }
 
 

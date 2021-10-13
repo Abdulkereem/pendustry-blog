@@ -1,5 +1,4 @@
  <script>
-	import { toFullMonth } from './../../Utilities/Constants/times.js';
   import { onMount } from "svelte";
   import PostOnwer from "./PostOnwer.svelte";
 
@@ -7,34 +6,12 @@
   
   onMount(()=>{
   })
-  let user={
-    fullname: 'Gert Svaiko',
-    profilepicture: 'im1.pgn',
-    about: 'Gert Svaiko is a writer passionate about digital marketing and everything related to creating websites'
-  }
 
   $: if(post){
     onMount(()=>{
-      let content='';
+      console.log({content: post.content}, 'comming in');
       let readTime=1;
-      try {
-        content = JSON.parse(post.content);
-      } catch (error) {
-        content = post.content
-      }
-      let pureContent = content.toString().replace(/<img.*">/g, ''); 
-      pureContent = pureContent.replace(/<\d*\S.*">/g, '');
-      // pureContent = pureContent.replace(/(<\/.*>(?!\d))/g, '');
-      // console.log(pureContent);     
-      // console.log(pureContent);
-
-      // console.log(pureContent);
-      // console.log(pureContent);
-      // pureContent = pureContent.replace(/<\/p>/g, '');
-      // console.log(pureContent);      
-      readTime=Math.floor(pureContent.split(' ').length/220);
-      readTime = readTime?readTime:1;
-      post={...post, dateposted: toFullMonth(post.dateposted), content, readTime}
+      post={...post,  readTime}
     })
   }
 
@@ -56,17 +33,17 @@
   <div class="flex justify-center">
     <div class="w-full max-w-3xl px-3 xs:px-8 sm:px-16">
       <div class="hidden mt-2 md:block">
-        <PostOnwer user={user} />
+        <PostOnwer user={post.user} />
       </div>
       <!-- Post -->
       <div>
         <!-- head section -->
         <div>
-          <div class="title">{post.Title}</div>
-          <div class="date"> { post.dateposted}<span class="mx-2">-</span> {post.readTime} min read</div>
+          <div class="title">{post.title}</div>
+          <div class="date"> { post.updatedAt}<span class="mx-2">-</span> {post.readTime} min read</div>
           {#if post.banner}
             <div class="banner">
-              <img src="https://{post.banner}" alt="banner" />            
+              <img src="{post.banner}" alt="banner" />            
             </div>            
           {/if}
           <div class="sub">{post.description? post.description: 'Description is needed here'}</div>
@@ -76,7 +53,7 @@
         <div class="my-10 sun-editor-editable"> {@html post.content }</div>
       </div>      
       <div class="block md:hidden">
-        <PostOnwer bind:user />
+        <PostOnwer user={post.user} />
       </div>
     </div>
   </div>

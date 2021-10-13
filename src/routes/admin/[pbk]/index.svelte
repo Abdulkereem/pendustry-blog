@@ -22,7 +22,7 @@
         return data.map(d=>{
           let createdAt = toFullMonth(d.createdAt);
           let updatedAt = toFullMonth(d.updatedAt);
-          console.log({createdAt, updatedAt});
+          // console.log({createdAt, updatedAt});
           let banner = `${banner_url}${d.banner}`;
           if (type=="draft") return  {...d, createdAt, updatedAt, banner};
           let go = d.title.replaceAll(' ','-').replaceAll('--', '-').toLowerCase();

@@ -8,13 +8,13 @@
     <!-- image -->
     <div class="h-20 w-20 mr-8">
       <a href="#">
-        <img src="im1.png" alt="user" class="user-dp" />
+        <img src="{user.profilePic}" alt="user" class="user-dp" />
       </a>
     </div>
     <!-- details -->
     <div class="flex-1">
       <div>
-        <a href="#" class="name">{user.fullname}</a> 
+        <a href="#" class="name">{user.accName}</a> 
         <button class="follow">Follow</button>
       </div>
       <div>{user.about}</div>

@@ -46,9 +46,9 @@ import AdminProfile from './AdminProfile.svelte';
     <!-- Tab section -->
     <div>
       {#if tab == 'published'}
-        <AdminPostsPreview  posts={payload.posts} />
+        <AdminPostsPreview total={payload.totalPublished} posts={payload.posts} />
       {:else}
-        <AdminDraftPreview drafts={payload.drafts} />
+        <AdminDraftPreview total={payload.totalDraft} drafts={payload.drafts} />
       {/if}
     </div>
   </div>
