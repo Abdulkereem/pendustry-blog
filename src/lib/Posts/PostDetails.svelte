@@ -1,18 +1,12 @@
  <script>
+	import { readtime } from './../../Utilities/Constants/responseParser.js';
+  import Editor from "$lib/Forms/Editor.svelte";
   import { onMount } from "svelte";
   import PostOnwer from "./PostOnwer.svelte";
 
   export let post;
-  
   onMount(()=>{
   })
-
-  $: if(post){
-    let readTime=1;
-    post={...post,  readTime}
-  }
-
- 
 
 
 </script>
@@ -37,17 +31,27 @@
         <!-- head section -->
         <div>
           <div class="title">{post.title}</div>
-          <div class="date"> { post.updatedAt}<span class="mx-2">-</span> {post.readTime} min read</div>
+          <div class="date"> { post.updatedAt}<span class="mx-2">-            
+          </span> {readtime(post.description)} </div>
           {#if post.banner}
             <div class="banner">
-              <img src="{post.banner}" alt="banner" />            
+              <img src="{post.banner}" alt="banner" />        
             </div>            
           {/if}
           <div class="sub">{post.description? post.description: 'Description is needed here'}</div>
         </div>
 
         <!-- post content container -->
-        <div class="my-10 sun-editor-editable"> {@html post.content }</div>
+        <div class="my-10 sun-editor-editable px-0 shadow-sm bg-gray-50"
+          style="padding: 0px; background-color: inherit"
+        >
+            {@html post.content }
+        </div>
+        <!--
+        {#if !readTime}
+           <Editor content={post.content} disable={true} bind:readTime /> 
+        {/if}
+      -->
       </div>      
       <div class="block md:hidden">
         <PostOnwer user={post.user} />

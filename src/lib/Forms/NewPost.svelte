@@ -1,6 +1,6 @@
 
 <script>	
-	import { bannerPic, hToken } from './../../Utilities/Constants/responseParser.js';
+	import { bannerPic, hToken, parseReadTime, removedReadTime } from './../../Utilities/Constants/responseParser.js';
   import { onMount } from "svelte";  
   import Fa from 'svelte-fa/src/fa.svelte';
   import { faImage, faSpinner, faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -21,11 +21,14 @@
   let submitting= false;
   let responseData;
   let saving= false;
+  let readTime;
+
+
 
   $: if(draft) {
     onMount(()=>{
       title = draft.title;
-      description = draft.description;
+      description = removedReadTime(draft.description);
       bannerPreview = bannerPic(draft.banner);
       content = draft.content;
     })
@@ -76,11 +79,12 @@
     if(!draft){
       data = new FormData();
       data.append('title', title);
-      data.append('description', description);
+      data.append('description', parseReadTime(description,readTime));
       data.append('banner', banner);
       data.append('content', content);
     }else{
-      data={ description, title, content }
+      data={ description: parseReadTime(description,readTime), title, content }
+      console.log({data}, 'see description');
     }
     console.log({content}, 'leaving');
     // let headers= {...hToken()};
@@ -169,7 +173,7 @@
           </span> 
         </div>
         <!-- Suneditor container -->
-        <div class="w-full max-w-full" ><Editor  bind:content /></div>
+        <div class="w-full max-w-full" ><Editor bind:readTime  bind:content /></div>
 
         <!-- Validation message -->
         {#if contentError}

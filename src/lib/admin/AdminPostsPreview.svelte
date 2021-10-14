@@ -25,7 +25,7 @@
 </script>
 
 <div class="cover">
-  {#if !posts}
+  {#if !posts || !posts.length}
     <!-- No post message -->
     <NoArticleTemplate message="You're yet to publish an article" />
   {:else}

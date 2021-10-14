@@ -1,5 +1,6 @@
 
 <script>
+	import { removedReadTime } from './../../Utilities/Constants/responseParser.js';
 	import { page } from '$app/stores';
 	import NoArticleTemplate from './NoArticleTemplate.svelte';
 	import { fillMage } from './../../Utilities/Constants/posts.js';
@@ -33,7 +34,8 @@
             </div>
             <!-- description -->
             <div class="sub my-3">
-              { draft.description.slice(0,80)}{draft.description.length > 80 && '...'}
+              { removedReadTime(draft.description).slice(0,80)} 
+              {removedReadTime(draft.description).length > 80?'...':''}
             </div>
             <!--Updated date-->
             <div class="text-opacity-80 text-sm font-medium text-gray-900 ">
@@ -47,7 +49,7 @@
             <div class="flex justify-between items-center mt-3">
               <div class="w-full mr-1">
                 <button class="button ">                  
-                    <a class="link" href="{path}/drafts" >
+                    <a class="link" href="{path}/drafts/{draft.id}" >
                       <span class="">Preview </span> 
                     </a> 
                 </button>

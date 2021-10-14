@@ -1,23 +1,22 @@
 <script>
 
  export let user;
- $:{
-   console.log({user});
- }
+ 
+ 
 
 </script>
 <div>
   <div class="block pl-2 xs:pl-0 xs:flex xs:items-center p-2" >
     <!-- image -->
     <div class="h-20 w-20 mr-8">
-      <a href="#">
+      <a href="/{user.username||user.id}/articles">
         <img src="{user.profilePic}" alt="user" class="user-dp" />
       </a>
     </div>
     <!-- details -->
     <div class="flex-1">
       <div>
-        <a href="#" class="name">{user.accName}</a> 
+        <a href="/{user.username||user.id}/articles" class="name">{user.accName}</a> 
         <button class="follow">Follow</button>
       </div>
       <div>{user.about}</div>
@@ -30,7 +29,7 @@
     @apply rounded-full w-full h-full object-fill;
   }
   .name{
-    @apply font-medium;
+    @apply font-medium text-opacity-80 text-gray-900;
   }
   .follow{
     @apply ring-1 ring-indigo-900 rounded-full text-indigo-900 align-middle ml-2 

@@ -10,6 +10,9 @@
   let editor;
   let errors =false;
   export let content="";
+  export let readTime;
+
+  $: console.log({content});
 
   const loadEditor=()=>{
     try {
@@ -17,36 +20,35 @@
         editor = SUNEDITOR.create('sample',{
           katex: katex,
           codeMirror:  window.CodeMirror?window.CodeMirror:null,      
-          height: 300,
+          height:300,
           resizingBar: true,
-          charCounter  :true,
-          imageMultipleFile: true,
+          charCounter: true,
+          showPathLabel: true,
+          charCounter: true,
+          // imageMultipleFile: false,
           placeholder: "Write your content here",
           buttonList: [
             ['undo', 'redo'],
-            ['font', 'fontSize', 'formatBlock'],
-            ['paragraphStyle', 'blockquote'],
-            ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
-            ['fontColor', 'hiliteColor', 'textStyle'],
-            ['removeFormat'],
-            '/', // Line break
-            ['outdent', 'indent'],
-            ['align', 'horizontalRule', 'list', 'lineHeight'],
-            ['table', 'link', 'image', 'video', 'audio', 'math'], // You must add the 'katex' library at options to use the 'math' plugin.
+            ['font', 'fontSize', 'formatBlock','paragraphStyle'],
+            ['bold', 'underline', 'italic', 'strike','fontColor', 'hiliteColor',
+              'textStyle',   'subscript', 'superscript'
+            ],
+            [ 'blockquote', 'removeFormat','outdent', 'indent',
+              'align', 'horizontalRule', 'list', 'lineHeight'
+            ],
+            ['table',  'math','link', 'codeView', 'showBlocks', 'video', 'audio', 'image',],
             /** ['imageGallery'] */ // You must add the "imageGalleryUrl".
-            ['fullScreen', 'showBlocks', 'codeView'],
-            ['preview', 'print'],
-            ['save', /*'template'*/]
+            ['save', 'print','fullScreen', 'preview',/*'template'*/]
           ],
           // lang: en
         });
-  
-          // editor = editor.create('sample', {});
-        editor.onChange = function (contents, core) {
-          
-           console.log('onChange', contents) 
-          content = contents;
-        }
+        
+          content && editor.setContents(content);
+          editor.onChange = function (contents, core) {
+            content = contents;
+            readTime= editor.getText().split(" ").length;
+          }
+
       }  
       errors = false    
     } catch (error) {
@@ -63,10 +65,9 @@
        return loadEditor()
       }
 
-      clearInterval(interval);
-      console.log('inter');
+      clearInterval(interval);      
       content && editor.setContents(content);
-    }, 500)
+    }, 200)
 
   })
 
@@ -84,9 +85,16 @@
 <script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/xml/xml.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/css/css.js"></script> -->
 </svelte:head>
-<div class="w-full max-w-full min-w-full flex items-stretch">
-  <textarea class="place-self-stretch justify-self-stretch" 
-    style="width: 100%; min-width-100%" id="sample" 
+
+<div class="w-full border-0 max-w-full min-w-full flex items-stretch">
+  <textarea class="place-self-stretch border-0 justify-self-stretch" 
+    style="width: 100%; outine:none;  border:none; min-width-100%" id="sample" 
   >
 </textarea>
 </div>
+<style lang="scss">
+  [contenteditable] {
+    outline:none;
+    border:none;
+  }
+</style>

@@ -1,23 +1,24 @@
 <script >
   
   import { page } from "$app/stores";
-  import Admin from "$lib/Admin/Admin.svelte";
   import axios from "axios";
   import { onMount } from 'svelte';
-  import {LAPI, banner_url, dp_url } from './../../../Utilities/JSONS/endpoints.json';
-  import {hToken} from './../../../Utilities/Constants/responseParser';
-  import { toFullMonth } from "./../../../Utilities/Constants/times";
+  import {LAPI, banner_url, dp_url } from './../../Utilities/JSONS/endpoints.json'; 
+  import { toFullMonth } from "./../../Utilities/Constants/times";
+import AccountPostCover from "$lib/AccountPosts/AccountPostCover.svelte";
 
-  export let payload;
+  export let user, pagination, articles;
   let error=false;
   let loaded=false;
 
+  $: console.log({user, pagination, articles});
   const fetchUser=async()=>{
     try {
       //equilvalent data.data
-      let pbk = $page.params.pbk.split('?')[0];
-      let {data:{data}} = await axios.get(`${LAPI}prefetch-user/${pbk}`, {headers: hToken()});
+      let {username} = $page.params;
+      let {data} = await axios.get(`${LAPI}user-articles/${username}`);
       // parse date to readable and set route for view
+
       const mapper=(data, type="published")=>{        
         return data.map(d=>{
           let createdAt = toFullMonth(d.createdAt);
@@ -25,17 +26,16 @@
           // console.log({createdAt, updatedAt});
           let banner = `${banner_url}${d.banner}`;
           if (type=="draft") return  {...d, createdAt, updatedAt, banner};
-          let go = d.title.replaceAll(/ /g,'-').replaceAll(/--/g, '-').toLowerCase();
+          let go = d.title.replace(/ /g,'-').replace(/--/g, '-').toLowerCase();
           go = `${go}/${d.id}`;
           return {...d, createdAt, updatedAt, banner, goto:go};
         })
       }
-  
-      data.posts = mapper(data.published);
-      data.drafts= mapper(data.drafts, 'draft');
-      data.profilePic = `${dp_url}${data.profilePic}`;
-      payload = data;
-      console.log({data});
+      data.user.profilePic = `${dp_url}${data.user.profilePic}`;
+      user = data.user;
+      pagination = data.pagination,  
+      articles = await mapper(data.articles);
+      // console.log({data});
     } catch (err) {
       console.log({err})
       error = true;
@@ -50,7 +50,6 @@
 </script>
 {#if !error && loaded}
   <div class="w-full max-w-full">
-    <Admin payload={payload} />
-
+    <AccountPostCover articles={articles} user={user} pagination={pagination} />
   </div>
 {/if}

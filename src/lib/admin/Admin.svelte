@@ -4,25 +4,39 @@
   import { onMount } from 'svelte';
   import AdminPostsPreview from './AdminPostsPreview.svelte';
   import AdminDraftPreview from './AdminDraftPreview.svelte';
+  import AdminProfile from './AdminProfile.svelte';
 
   export let  payload;
   let tab = $page.query.get('tab');
 
   let {path} = $page;
-  $: {
-    
-    
- 
-      if(!['published','draft'].includes($page.query.get('tab'))){
-        tab = 'published';
-        $page.query.append('tab', tab);
+  $: { 
+    onMount(()=>{
+
+      if(localStorage._tbs_){
+        try {        
+          let tbs = JSON.parse(atob(localStorage._tbs_))
+          if(!['published','draft'].includes(tbs)){
+            tab = 'published';
+          }
+          tab = tbs;
+        } catch (error) {
+          tab = 'published';
+        }
       }else{
-        tab = $page.query.get('tab');
+        tab = 'published';
       }
+    })
+  }
+
+  const switchTab=(_tab)=>{
+    if(tab == _tab) return; 
+    tab = _tab 
+    localStorage._tbs_ = btoa(JSON.stringify(_tab));
+
   }
 
   
-import AdminProfile from './AdminProfile.svelte';
 </script>
 <div class="cover">
   <!--Right Profile box -->
@@ -35,12 +49,12 @@ import AdminProfile from './AdminProfile.svelte';
   <div class="articles">
     <!-- Head tab  on:click={()=>tab='published'}-->
     <div class="grid grid-cols-2">
-      <a href="{path}?tab=published" sveltekit:noscroll class:tab={tab=='published'} class="text-center" >
+      <span on:click={()=>switchTab('published')} sveltekit:noscroll class:tab={tab=='published'} class="text-center" >
         Published 
-      </a>
-      <a  href="{path}?tab=draft" sveltekit:noscroll class:tab={tab=='draft'} class="text-center">
+      </span>
+      <span  on:click={()=>switchTab('draft')} sveltekit:noscroll class:tab={tab=='draft'} class="text-center">
         Draft
-      </a>
+      </span>
     </div>      
     <hr class="hr" />
     <!-- Tab section -->

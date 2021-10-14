@@ -8,8 +8,8 @@
       let result = await response.json();
       // console.log(Object.keys(result));
       let posts = result.articles.map(data=>{
-        let goto = data.title//.toString().replaceAll(' ','-').replaceAll('--', '-');
-        goto = `${goto}/${data.id}`;
+        let goto = data.title.toLowerCase().replace(/ /g,'-').replace(/--/g, '-');
+        goto = `${goto}-${data.id}`;
         return {...data, goto}
       })
       console.log(posts);

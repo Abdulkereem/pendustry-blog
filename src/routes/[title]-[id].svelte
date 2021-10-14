@@ -1,7 +1,7 @@
 <script context="module">
-	import { toFullMonth } from './../../Utilities/Constants/times.js';
-	import { dpPic, bannerPic } from './../../Utilities/Constants/responseParser.js';
-  import {LAPI} from './../../Utilities/JSONS/endpoints.json';
+	import { toFullMonth } from './../Utilities/Constants/times.js';
+	import { dpPic, bannerPic } from './../Utilities/Constants/responseParser.js';
+  import {LAPI} from './../Utilities/JSONS/endpoints.json';
 
   export async function load({ page, fetch }) {
       console.log(page.params);
@@ -10,7 +10,7 @@
       let res = await fetch(url);
       if(res.ok){
         let result = await res.json();
-        console.log(result);
+        // console.log(result);
        let post = result.article;
        post.user.profilePic = dpPic(post.user.profilePic);
        post.banner = bannerPic(post.banner);
@@ -39,7 +39,7 @@
   export let goto;
 
   $: if(post) {
-    console.log({post});  
+    // console.log({post});  
     onMount(()=>{      
       post.createdAt = toFullMonth(post.createdAt);
       post.updatedAt = toFullMonth(post.updatedAt);
