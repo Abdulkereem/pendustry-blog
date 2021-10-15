@@ -32,7 +32,7 @@ import axios from 'axios';
   }
 </script>
 
-<div class="flex justify-center">
+<div class="flex justify-center mb-10">
   <div class="w-full max-w-3xl px-3 xs:px-10 sm:px-14  ">
     <div class="flex items-center">
       <span class="mr-4 text-2xl font-medium">Discussions </span>
@@ -41,7 +41,7 @@ import axios from 'axios';
         {total}
       </span>
     </div>
-    <div class="bg-white rounded p-3 mb-5 mt-3">
+    <div class:comments_container={(comments.length)}>
       {#each comments as comment (comment.id)}
         <div class="border mb-2 p-2 rounded xs::rounded-md">
           <div class="flex items-center justify-between">
@@ -98,6 +98,10 @@ import axios from 'axios';
   .pagine{
     @apply w-full mx-auto h-11 px-2 py-2 max-w-sm flex items-center 
     bg-gray-100 rounded-md justify-center
+  }
+  
+  .comments_container{
+    @apply bg-white rounded p-3 mb-5 mt-3;
   }
 
   .errors{

@@ -1,9 +1,13 @@
 <script context="module">
+	import { page } from '$app/stores';
 	import NoData from './../lib/Errors/NoData.svelte';
   import {LAPI} from './../Utilities/JSONS/endpoints.json';
-   export async function load({page, fetch}){
+  export async function load({page, fetch}){
 
-    let url = `${LAPI}published-articles`
+    let limit = page.query.get('limit');
+    let _page = page.query.get('page');
+    let search = page.query.get('search');
+    let url = `${LAPI}published-articles?page=${_page?_page:1}&limit=${limit?limit:2}&search=${search?search:''}`
     let response = await fetch(url);
     try {
       if (response.ok){
@@ -13,7 +17,7 @@
           goto = `${goto}-${data.id}`;
           return {...data, goto}
         })
-        console.log({posts});
+        console.log({pagination});
         return{
           props:{
             posts,
@@ -34,14 +38,26 @@
 </script>
 <script>
   import Posts from "$lib/Posts/Posts.svelte";
+  import Pagination from '$lib/Pagination.svelte';
   export let posts;
   export let pagination
+  let {path, query} = $page;
 
 
 </script>
 <div>
   {#if posts.length}
-     <Posts pagination={pagination} posts={posts}/>
+    <Posts pagination={pagination} posts={posts}/>
+    <Pagination 
+      path={path} 
+      total={pagination.total} 
+      limit={pagination.per_page} 
+      current={pagination.current_page} 
+      last_page={pagination.last_page_url}
+      length={pagination.total_pages}
+      current_page_total={pagination.current_page_total}
+      search={query.get('search')?query.get('search'):''}
+    />
   {:else}
      <NoData message="Article" />
   {/if}

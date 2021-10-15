@@ -1,50 +1,45 @@
 <script>
-  import {faFolderOpen, faPen } from "@fortawesome/free-solid-svg-icons";
+  import { faFireAlt } from "@fortawesome/free-solid-svg-icons";
   import Fa from "svelte-fa/src/fa.svelte";
   export let message;
 </script>
 
-<div class="relative">
-  <div class="empty">
-    <span class="icon-span">
-      <Fa icon={faFolderOpen} />
-    </span>
-    <div class="message">{message}</div>
-  </div>
-  <div class="add-icon">
-    <a href="#" class="pen-wrap">
-      <span>.....</span>
-      <span class="flex items-center"><Fa icon={faPen} /></span>
-    </a>
+<div class="w-full max-w-sm mx-auto flex justify-center">
+  <div>
+    <div class="w-full h-20">
+      <img class="h-20" src="/pen-logo.png" alt="PENDUSRTY" />
+    </div>
+    <div class="text-red-300 mb-4 text-9xl">500</div>
+    <div class="text-red-300 mb-3 items-center flex text-2xl">
+      <span class="mr-2"><Fa icon={faFireAlt} /></span>
+      <span>Internal Sever Error</span> 
+      
+    </div>
+    <div class="text-white">Something went wrong.</div>
+    
+    <div class="text-white">We are working on it</div>
+    <div class="mb-3 text-white text-base font-normal">You can proceed to our homepage</div>
+    <div>
+      <button class="button animate-bounce hover:animate-none">
+        <a class="link text-white"  href="/" sveltekit:prefetch>
+          HOME PAGE
+        </a>
+      </button>
+    </div>
+
+
   </div>
 </div>
 
 <style lang="scss">
-
-  .empty{
-    @apply w-full h-full flex flex-col justify-center items-center border-2 h-80 
-    sm:py-40 md:py-56 rounded;
+.button{
+    @apply border-2 border-indigo-500 w-full rounded mb-2 text-black px-5
+    transition duration-500 hover:border-indigo-700 hover:rounded
   }
 
-  .icon-span{
-    @apply text-9xl text-indigo-500 text-opacity-60 animate-pulse animate-bounce;
+  .link{
+    @apply w-full flex justify-center items-center leading-8 tracking-wide 
+    transition duration-500 hover:bg-indigo-900 hover:bg-opacity-60
+    hover:text-white
   }
-
-  .message{
-    @apply text-xl text-gray-900 font-semibold;
-  }
-
-  .add-icon{
-    position: absolute;
-    top:50%;
-    left:50%;
-    transform: translate(-50%, -50%);
-    @apply text-3xl transition duration-300 hover:text-pink-900 hover:animate-none;
-  }
-
-  .pen-wrap{
-    @apply flex h-20 w-20 cursor-pointer border-l-2 border-t-2 border-b-2 p-5 
-    rounded-full transition duration-500 hover:border-blue-500;
-  }
-
 </style>

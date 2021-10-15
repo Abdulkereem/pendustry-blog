@@ -1,4 +1,5 @@
 <script>
+	import { parseSearch } from './../Utilities/Constants/responseParser.js';
   import Fa from 'svelte-fa/src/fa.svelte'
   import { faSearch } from '@fortawesome/free-solid-svg-icons'
   import { onMount } from "svelte";
@@ -8,11 +9,15 @@
   let searchKey="";
 
   const toggleSearch=()=>{
-    if(showSearch && searchKey.trim()){
-     return alert(searchKey)
-    }    
+    // if(showSearch && searchKey.trim()){
+    //  return alert(searchKey)
+    // }    
     barHeight = showSearch? 60:100;
     showSearch = !showSearch;
+  }
+
+  const searchNow=async()=>{
+    // 
   }
 
   
@@ -48,27 +53,38 @@
           </strong>
         </div>
       </a>
-      <div class=" w-full flex">
-        <div class="w-1/2 sm:w-5/6 ">
+      <div class="w-full flex">
+        <div class=" w-full ">
           <div class="flex hidden sm:flex justify-center">
-            <input bind:value={searchKey} class="input-lg w-3/5 lg:w-2/5" />
-            <span class="spanicon flex hover:motion-safe:animate-spin">
-              <Fa icon={faSearch} />
-            </span>
-          </div>
-          <div class="h-full flex justify-center">
-            <span on:click={toggleSearch} 
-              class="spanicon h-full flex sm:hidden"
+            <input bind:value={searchKey} class="input-lg w-3/5" />
+            <a href={searchKey.trim()?`/?search=${parseSearch(searchKey)}`:''} 
+                disabled={!searchKey.trim()?'disabled':'enabled'}
+               class="spanicon flex hover:motion-safe:animate-spin"
             >
               <Fa icon={faSearch} />
-            </span>
+            </a>
+          </div>
+          <div class="h-full flex justify-center">
+            {#if !showSearch || !searchKey.trim()}
+              <span on:click={toggleSearch} 
+                class="spanicon h-full flex sm:hidden"
+              >
+                <Fa icon={faSearch} />
+              </span>
+            {:else}
+              <a  href={searchKey.trim()?`/?search=${parseSearch(searchKey)}`:''}
+                class="spanicon h-full flex sm:hidden hover:motion-safe:animate-spin"
+              >
+                <Fa icon={faSearch} />
+              </a>
+            {/if}
           </div>
         </div> 
-        <div class="justify-end flex items-center w-1/2 sm:w-1/6">
+        <!-- <div class="justify-end flex items-center w-1/2 sm:w-1/6">
           <button class="sign-in-anim ">
             <span class="md:px-1 lg:px-4">SIGN IN</span>
           </button>
-        </div>     
+        </div>      -->
       </div>
     </div>
     <!-- mobile scale search -->
@@ -125,5 +141,8 @@
     hidden sm:inline font-bold transform hover:scale-105 hover:text-blue-900 ;
   }
 
+  a[disabled="disabled"] {
+    pointer-events: none;
+  }
 
 </style>

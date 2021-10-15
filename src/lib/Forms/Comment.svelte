@@ -71,6 +71,7 @@
       responseError = true;
     }
     submitting = false;
+    setTimeout(()=>{responseError=null},2000);
   }
 
 </script>
@@ -129,7 +130,7 @@
             Oops! Something went wrong, please retry.
           </div>
         {/if}
-        {#if responseError == null}
+        {#if responseError == false}
           <div class="successful">
             Comment sucessfully added.
           </div>

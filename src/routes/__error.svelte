@@ -1,5 +1,4 @@
 <script context="module">
-	import { onMount } from 'svelte';
 	export function load({ error, status }) {
     console.log({error});
 		return {
@@ -19,7 +18,7 @@ import UnauthorizedPage from "$lib/Errors/UnauthorizedPage.svelte";
 
 </script>
 
-<div class="cover">
+<div class="cover bg-gradient">
 <div class="contain">
   {#if status == 404 }
     <NotFoundPage />
@@ -35,13 +34,12 @@ import UnauthorizedPage from "$lib/Errors/UnauthorizedPage.svelte";
 
   .cover{
     position: absolute;
-    padding-top: 90px;
-    background-color: red;
-    top: inherit;
+    top: 0px;
     left: 0px;
     width: 100%;
     height: 100%;
     bottom: 0px;
+    z-index: 10000;
   }
 
   .contain{

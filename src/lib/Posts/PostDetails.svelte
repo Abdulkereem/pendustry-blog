@@ -23,11 +23,11 @@
         <!-- head section -->
         <div>
           <div class="title">{post.title}</div>
-          <div class="date"> { post.updatedAt}<span class="mx-2">-            
+          <div class="date"> {post.updatedAt}<span class="mx-2">-            
           </span> {readtime(post.description)} </div>
           {#if post.banner}
             <div class="banner">
-              <img src="{post.banner}" alt="banner" />        
+              <img class="banner" src="{post.banner}" alt="banner" />        
             </div>            
           {/if}
           <div class="sub">
@@ -71,4 +71,7 @@
   @apply mb-5 text-gray-600;
 }
 
+.banner{
+    @apply h-full w-full object-fill;
+  }
 </style>

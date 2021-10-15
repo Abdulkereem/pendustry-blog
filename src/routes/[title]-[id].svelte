@@ -6,6 +6,7 @@
   export async function load({ page, fetch }) {
     console.log(page.params);
       let {id} = page.params;
+      id= id.split("-").slice(-1);
       let url = `${LAPI}single-published/${id}`
       let res = await fetch(url);
       if(res.ok){
@@ -41,9 +42,9 @@
   let comments=[];
 
   $: if(post) {
-    console.log({post});  
     onMount(()=>{      
       post.createdAt = toFullMonth(post.createdAt);
+      // console.log({post});  
       post.updatedAt = toFullMonth(post.updatedAt);
       comments = post.comments.map(c=>({...c,createdAt:toFullMonth(c.createdAt)}))
     })

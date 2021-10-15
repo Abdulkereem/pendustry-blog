@@ -76,6 +76,7 @@ export const readtime=(data)=>{
   if(!data) return '';
  data = data.match(/\[\[\d*\]\]/);
  if (!data) return '';
+ data=data.toString();
  data= data.slice(2, data.length-2);
  let time = Number(data);
  if(isNaN(time)) return '';
@@ -83,6 +84,10 @@ export const readtime=(data)=>{
   if(_time) return _time + ' min read';
   return Math.round((0-(time/200))*60) +' sec read';
 };
+
+export const parseSearch=(str="")=>{
+  return str.toString().trim().toLowerCase();
+}
 
 
 /** Add the  world readTime to description to get read time during renduring */
