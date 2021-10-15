@@ -80,8 +80,8 @@ export const readtime=(data)=>{
  let time = Number(data);
  if(isNaN(time)) return '';
  let _time = Math.round(time/200);
-  if(_time) return _time + 'min read';
-  return Math.round((0-(time/200))*60) +'sec read';
+  if(_time) return _time + ' min read';
+  return Math.round((0-(time/200))*60) +' sec read';
 };
 
 

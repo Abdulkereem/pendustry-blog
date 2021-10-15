@@ -1,11 +1,14 @@
 
 <script>
+	import { removedReadTime, readtime } from './../../Utilities/Constants/responseParser.js';
 	import { toFullMonth } from './../../Utilities/Constants/times.js';
   import { onMount } from 'svelte';
   import {banner_url, dp_url} from './../../Utilities/JSONS/endpoints.json'
+  import Fa from 'svelte-fa/src/fa.svelte';
+import { faComment } from '@fortawesome/free-solid-svg-icons';
 
   export let posts;
-
+  removedReadTime
   let _toMonth;
   onMount(()=>{
     _toMonth = toFullMonth;
@@ -14,6 +17,9 @@
 </script>
 
 <div class="cover">
+  <div class="font-bold text-xl text-indigo-900 text-opacity-70 animate-pulse">
+    TRENDING ARTICLES
+  </div>
   <hr class="hr" />
   <div class="post-cover">
     {#each posts as post,i (i)  }
@@ -31,24 +37,33 @@
             <a href="/{post.goto}" class="Title ">{post.title}</a>
           </div>
           <!-- summary -->
-          <div class="sub my-3 self-center">
-            {post.description}
+          <div class="sub my-3 self-center">             
+            {removedReadTime(post.description).slice(0,80)} 
+            {removedReadTime(post.description).length > 80?'...':''}
           </div>
           <!-- User details -->
-          <div class="flex self-end">
+          <div class="flex self-end items-center">
             <div>
               <a href="/{post.user.username|| post.user.id}/articles">
-                <img src="{dp_url}{post.user.profilePic}" alt="owner" class="h-10 w-10 rounded-full" />
+                <img src="{dp_url}{post.user.profilePic}" alt="owner" 
+                  class="w-12 h-12 xs:h-14 xs:w-14 rounded-full" 
+                />
               </a>
             </div>
             <div class="text-sm leading-4 ml-2">
-              <div class="text-opacity-80 cursor-pointer">
+              <div class="text-opacity-80 font-medium cursor-pointer">
                 <a href="/{post.user.username|| post.user.id}/articles">
                   {post.user.accName}
                 </a>
               </div>
-              <div class="text-opacity-60 ">
-                { _toMonth? _toMonth(post.updatedAt): ''}
+              <div class="text-opacity-80 text-sm mt-2 font-medium text-gray-900  ">
+                { _toMonth? _toMonth(post.updatedAt): ''} - {readtime(post.description)}
+              </div>
+              <div class="flex items-center mt-1 ml-3">
+                <span class="text-gray-900 text-xl"><Fa icon={faComment} size="" /></span>
+                <span class="ml-1 text-base text-gray-900 font-medium text-opacity-70">
+                  {post.totalComments}
+                </span>
               </div>
             </div>
           </div>
@@ -67,7 +82,7 @@
   }
 
   .hr{
-    @apply my-10
+    @apply mb-10 mt-1 border
   }
   
   .post-cover{

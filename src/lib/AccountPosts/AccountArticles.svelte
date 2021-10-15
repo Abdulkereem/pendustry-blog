@@ -1,5 +1,8 @@
 
 <script>
+	import Fa from 'svelte-fa/src/fa.svelte';
+  import { faComment } from '@fortawesome/free-solid-svg-icons';
+	import { removedReadTime, readtime } from './../../Utilities/Constants/responseParser.js';
 
 
   export let articles;
@@ -20,20 +23,25 @@
         <!-- content container -->
         <div class="lg-texts">
           <!-- Date -->
-          <div class="">
-            <div class="text-opacity-80 tracking-tighter text-sm text-gray-900 ">
-              {post.updatedAt}
-            </div>
+          <div class="text-opacity-80 tracking-tighter text-sm text-gray-900 ">
+            {post.updatedAt} - {readtime(post.description)}
           </div>
           <!-- Title -->
           <div class="self-start">
             <a href="/{post.goto}" class="Title ">{post.title}</a>
           </div>
-          <!-- summary -->
+          <!-- description -->
           <div class="sub my-3 self-center">
-            {post.description}
+            {removedReadTime(post.description).slice(0,80)} 
+            {removedReadTime(post.description).length > 80?'...':''}
           </div>
-
+          <!-- Comment -->
+          <div class="flex justify-end items-center pr-4">
+            <span class="text-gray-900 text-xl"><Fa icon={faComment} size="" /></span>
+            <span class="ml-1 text-lg text-gray-900 font-medium text-opacity-70">
+              {post.totalComments}
+            </span>
+          </div>
         </div>
       </div>    
     {/each }
@@ -73,7 +81,7 @@
   }
 
   .lg-texts{
-    @apply lg:col-span-2 p-5 pt-1 grid place-content-between place-items-stretch;
+    @apply lg:col-span-2 p-5 pt-1 grid place-items-stretch;
   }
 
   .Title{

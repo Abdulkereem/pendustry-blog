@@ -1,10 +1,10 @@
 <script context="module">
-	import { toFullMonth } from './../Utilities/Constants/times.js';
+  import { toFullMonth } from './../Utilities/Constants/times.js';
 	import { dpPic, bannerPic } from './../Utilities/Constants/responseParser.js';
   import {LAPI} from './../Utilities/JSONS/endpoints.json';
-
+  
   export async function load({ page, fetch }) {
-      console.log(page.params);
+    console.log(page.params);
       let {id} = page.params;
       let url = `${LAPI}single-published/${id}`
       let res = await fetch(url);
@@ -30,27 +30,32 @@
   }
 </script>
 <script>
-	import Comment  from '$lib/Forms/Comment.svelte';
+  import Comment  from '$lib/Forms/Comment.svelte';
+  import PostComments from '$lib/Posts/PostComments.svelte';
   import PostDetails from "$lib/Posts/PostDetails.svelte";
   // import { toFullMonth } from './../Utilities/Constants/times.js';
   import { onMount } from 'svelte';
   export let post;
   export let id;
   export let goto;
+  let comments=[];
 
   $: if(post) {
-    // console.log({post});  
+    console.log({post});  
     onMount(()=>{      
       post.createdAt = toFullMonth(post.createdAt);
       post.updatedAt = toFullMonth(post.updatedAt);
-      post.comments = post.comments.map(c=>({...c,createdAt:toFullMonth(c.createdAt)}))
-    })  
-
+      comments = post.comments.map(c=>({...c,createdAt:toFullMonth(c.createdAt)}))
+    })
   }
+
+  $: console.log(comments, 'from parent');
+
 </script>
 <div>
    <PostDetails post={post}  goto={goto} />
-   <Comment id={post.id} />
+   <Comment bind:comments id={post.id} />
+   <PostComments id={post.id} comments={comments} total={post.totalComments} />
 </div>
 <style lang="scss">
 

@@ -48,7 +48,7 @@
   <!-- Articles -->
   <div class="articles">
     <!-- Head tab  on:click={()=>tab='published'}-->
-    <div class="grid grid-cols-2">
+    <div class="grid cursor-pointer grid-cols-2">
       <span on:click={()=>switchTab('published')} sveltekit:noscroll class:tab={tab=='published'} class="text-center" >
         Published 
       </span>

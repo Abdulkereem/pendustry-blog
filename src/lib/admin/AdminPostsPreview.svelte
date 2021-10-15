@@ -1,6 +1,6 @@
 
 <script>
-	import { hToken } from './../../Utilities/Constants/responseParser.js';
+	import { hToken, removedReadTime} from './../../Utilities/Constants/responseParser.js';
   import { LAPI } from './../../Utilities/JSONS/endpoints.json';
 	import { axios } from 'axios';
 	import { page } from '$app/stores';
@@ -45,8 +45,9 @@
               <a href="/{post.goto}" class="title ">{post.title}</a>
             </div>
             <!-- description -->
-            <div class="sub my-3 self-center">
-              {post.description}
+            <div class="sub my-3 self-center">              
+              { removedReadTime(post.description).slice(0,80)} 
+              {removedReadTime(post.description).length > 80?'...':''}
             </div>
             <!-- published date -->
             <div class="flex self-end">

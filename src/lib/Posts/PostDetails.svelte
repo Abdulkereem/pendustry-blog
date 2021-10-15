@@ -1,17 +1,9 @@
  <script>
-	import { readtime } from './../../Utilities/Constants/responseParser.js';
-  import Editor from "$lib/Forms/Editor.svelte";
-  import { onMount } from "svelte";
+	import { readtime, removedReadTime} from './../../Utilities/Constants/responseParser.js';
   import PostOnwer from "./PostOnwer.svelte";
 
   export let post;
-  onMount(()=>{
-  })
-
-
 </script>
-
-
 <svelte:head> 
   
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
@@ -38,7 +30,9 @@
               <img src="{post.banner}" alt="banner" />        
             </div>            
           {/if}
-          <div class="sub">{post.description? post.description: 'Description is needed here'}</div>
+          <div class="sub">
+            {removedReadTime(post.description)? removedReadTime(post.description): 'Description is needed here'}
+          </div>
         </div>
 
         <!-- post content container -->
@@ -64,11 +58,11 @@
 <style lang="scss">
 
 .title{
-    @apply font-bold py-3 sm:py-4 text-xl xs:text-2xl text-opacity-80 leading-6
-  }
+  @apply font-bold py-3 sm:py-4 text-xl xs:text-2xl text-opacity-80 leading-6
+}
 
 .sub{
-  @apply my-4 text-gray-700 text-lg leading-6;
+  @apply my-4 text-gray-900 text-opacity-80 leading-6;
 }
 
 .date{

@@ -1,7 +1,9 @@
 <script>  
+	import { onMount } from 'svelte';
+  import { LAPI } from './../../Utilities/JSONS/endpoints.json';
   import Fa from 'svelte-fa/src/fa.svelte';
   import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-
+  import axios from 'axios';
   let fullName ='';
   let email='';
   let content='';
@@ -9,6 +11,22 @@
   let emailError=false;
   let contentError=false;
   let submitting=false;
+  let responseError;
+  export let id;
+  export let comments;
+
+  onMount(()=>{
+    if(localStorage._cun_){
+      try {
+        let cun = JSON.parse(atob(localStorage._cun_));
+        if(cun.email) email = cun.email;
+        if(cun.name) fullName = cun.name;
+      } catch (error) {
+        
+        return;
+      }
+    }
+  })
 
   const regex =(val)=>{
     if(/^\w+\.?\w+@\w+\.?\w+\.\w+$/.test(val.trim())) return true;
@@ -33,22 +51,26 @@
     }
   }
 
-  const comment=()=>{
+  const commentNow=async()=>{
     if(submitting) return;
     if(!validate()) return;
     submitting = true;
-
-    
+    responseError=null;
     let payload={
-      fullName, email, content
+      name:fullName, email, content
     }
-
-    setTimeout(()=>{
-      submitting = false;
-
-    }, 500)
-
-
+    try {
+      let {data:{data:{comment}}} = await axios.post(`${LAPI}comment/${id}`, payload);
+      console.log({comment});
+      comments= [comment, ...comments ];
+      content = '';
+      localStorage._cun_= btoa(JSON.stringify({name:fullName, email}))
+      responseError=false;
+    } catch (error) {
+      console.log({error});
+      responseError = true;
+    }
+    submitting = false;
   }
 
 </script>
@@ -100,10 +122,24 @@
           {/if}
         </div>
       </div>
+      <!-- Api Response Continer -->
+      <div class="mb-2">
+        {#if responseError == true}
+          <div class="errors">
+            Oops! Something went wrong, please retry.
+          </div>
+        {/if}
+        {#if responseError == null}
+          <div class="successful">
+            Comment sucessfully added.
+          </div>
+        {/if}
+
+      </div>
 
       <!-- Create button container -->
       <div class="flex my-6 px-2 justify-end">
-        <button class="button" on:click={comment}>
+        <button class="button" on:click={commentNow}>
           <div class="flex justify-center items-center">
             {#if !submitting}
               <span class="">Comment</span>
@@ -141,5 +177,10 @@
   }
   .errors{
     @apply text-red-400 text-center text-base
+  }
+
+  .successful{
+    @apply py-2 rounded bg-indigo-900 text-center text-white text-sm
+    mx-2 xs:mx-5 sm:mx-10 md:mx-20 bg-opacity-90
   }
 </style>

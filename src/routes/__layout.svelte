@@ -80,4 +80,11 @@
   body{
     @apply bg-gray-50
   }
+
+  .bg-gradient{
+    background-image:  linear-gradient(180deg, rgba(43,39,98, 0.5) 30%, rgba(34,145,227, 0)),
+    linear-gradient(120deg, rgba(50,123,220, 0.8), rgba(79, 94, 149, 0.7) 40%),
+    linear-gradient(230deg, rgba(19, 166, 255, 0.6) 35%, rgba(255,255,255,0) 30%),
+    linear-gradient(-35deg, rgba(50, 50, 200, 0.5) 40%, rgba(255,255,255,0) 31%);
+  }
 </style>

@@ -27,7 +27,7 @@ import AccountPostCover from "$lib/AccountPosts/AccountPostCover.svelte";
           let banner = `${banner_url}${d.banner}`;
           if (type=="draft") return  {...d, createdAt, updatedAt, banner};
           let go = d.title.replace(/ /g,'-').replace(/--/g, '-').toLowerCase();
-          go = `${go}/${d.id}`;
+          go = `${go}-${d.id}`;
           return {...d, createdAt, updatedAt, banner, goto:go};
         })
       }

@@ -1,7 +1,7 @@
 <script context="module">
 	import { onMount } from 'svelte';
 	export function load({ error, status }) {
-
+    console.log({error});
 		return {
 			props: {
 				status,
@@ -16,9 +16,11 @@ import ServerErrorPage from "$lib/Errors/ServerErrorPage.svelte";
 import UnauthorizedPage from "$lib/Errors/UnauthorizedPage.svelte";
 
 	export let status;
+
 </script>
 
-<div>
+<div class="cover">
+<div class="contain">
   {#if status == 404 }
     <NotFoundPage />
   {:else if (status == 500 || status == 400) }
@@ -27,3 +29,23 @@ import UnauthorizedPage from "$lib/Errors/UnauthorizedPage.svelte";
     <UnauthorizedPage />
   {/if}
 </div>
+</div>
+
+<style lang="scss">
+
+  .cover{
+    position: absolute;
+    padding-top: 90px;
+    background-color: red;
+    top: inherit;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    bottom: 0px;
+  }
+
+  .contain{
+    @apply h-full w-full flex justify-center items-center;
+  }
+
+</style>
