@@ -3,7 +3,7 @@
 	import { parseError } from './../../../Utilities/Constants/responseParser';
   import { UAPI } from './../../../Utilities/JSONS/endpoints.json'
   import Fa from 'svelte-fa/src/fa.svelte';
-  import { faImage, faSpinner, faCheck } from '@fortawesome/free-solid-svg-icons';
+  import { faSpinner } from '@fortawesome/free-solid-svg-icons';
   import axios from 'axios';  
   import { onMount } from 'svelte';
 import { goto } from '$app/navigation';
@@ -46,7 +46,7 @@ import { goto } from '$app/navigation';
       // responseData = {staus: 1, message: 'Content successfully published'};
     } catch (err) {
       console.log({err});
-      responseData = {staus: 0, message: parseError(err)};
+      responseData = {status: 0, message: parseError(err)};
     }
 
     submitting = false;
@@ -86,7 +86,7 @@ import { goto } from '$app/navigation';
       <div class="my-3">
         <label for="password"  class="label">Password*</label>
         <div class="w-full">
-          <input id="password" on:blur={checkBlur} bind:value={password} name="passord" 
+          <input id="password" on:blur={checkBlur} bind:value={password} name="password" 
             class="inputs" placeholder="Enter password" 
           />
           {#if passwordError}
@@ -98,7 +98,7 @@ import { goto } from '$app/navigation';
       </div>    
       <!-- Response message -->
       {#if responseData}
-        <div class="mb-3" class:success={responseData.staus} class:errors={!responseData.staus}>
+        <div class="mb-3" class:success={responseData.status} class:errors={!responseData.status}>
             {responseData.message}
         </div>        
       {/if}

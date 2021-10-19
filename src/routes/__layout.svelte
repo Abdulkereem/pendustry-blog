@@ -13,16 +13,17 @@
 
   let side = 'center';
   const sides=()=>{
-    let all = ["left", "right", "top", "bottom", "center"];
+    let all = ["left", "right", "top", "bottom", "center", 'full'];
     side = all[Math.floor(Math.random()* all.length)];
-    console.log(side);
+    // console.log(side);
   } 
 
-  // $: console.log(side)
+  // $: console.log(show)
 
 
 </script>
 <svelte:head>
+  <link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet'>
   <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/ko.js"></script>
@@ -37,14 +38,14 @@
 
 <div class="bg-gray-50 w-full max-w-full" style="margin-top: {barHeight+10}px;">
   <button on:click={()=>{ sides(); show = true}}>Modal</button>
-  <Modal bind:show bind:side body_class="tt" >
+  <Modal bind:show bind:side body_class="tt">
+    <!-- <div style="w-full h-52">Here</div>
     <div style="w-full h-52">Here</div>
     <div style="w-full h-52">Here</div>
     <div style="w-full h-52">Here</div>
     <div style="w-full h-52">Here</div>
     <div style="w-full h-52">Here</div>
-    <div style="w-full h-52">Here</div>
-    Here
+    Here -->
   </Modal>
   <slot></slot>
 
@@ -62,7 +63,7 @@
     background-color: red;
   }
   *{
-    @apply box-border 
+    @apply box-border
   }
 
   .round-card {
@@ -78,8 +79,13 @@
     transition: 0.3s;
   }
   body{
+    font-family: 'Nunito', sans-serif;
+    font-size: 17px;
+    font-weight: normal;
     @apply bg-gray-50
   }
+
+
 
   .bg-gradient{
     background-image:  linear-gradient(180deg, rgba(43,39,98, 0.5) 30%, rgba(34,145,227, 0)),

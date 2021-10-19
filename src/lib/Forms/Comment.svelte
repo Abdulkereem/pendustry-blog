@@ -75,7 +75,7 @@
   }
 
 </script>
-<div class="flex justify-center mt-5">
+<div class="flex justify-center mt-8">
   <div class="w-full max-w-3xl px-3 xs:px-10 sm:px-14 ">
     <!-- Comment Header -->
     <div class="text-2xl font-medium mb-2">Comment here</div>
@@ -161,7 +161,6 @@
 
   .inputs{
     font-size: 16px;
-    font-family: roboto;
     line-height: 28px;
     @apply outline-none rounded-md w-full py-1 px-2 border transition duration-500 transform 
     delay-100 focus:ring-1 ring-indigo-900 focus:border-indigo-900 ring-opacity-40 
@@ -169,7 +168,7 @@
   }
 
   .label{
-    @apply block pl-1 font-medium;
+    @apply block pl-1 font-medium text-lg;
   }
 
   .button{

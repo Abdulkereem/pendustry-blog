@@ -1,10 +1,14 @@
 <script>
+	import Modal  from '$lib/Modal.svelte';
+  import UpdatePassword from "$lib/Forms/UpdatePassword.svelte";
+  import EditProfile from "$lib/Forms/EditProfile.svelte";
+  import { faFile, faBookmark, faPen, faUser } from "@fortawesome/free-solid-svg-icons";
   import { page } from "$app/stores";
-  import { faFile, faBookmark, faPen } from "@fortawesome/free-solid-svg-icons";
   import Fa from "svelte-fa/src/fa.svelte";
 
   export let  profile;
-  
+  export let tabToDraft;
+  let show = false;
   let {path} = $page;
 </script>
     <div class="profile">
@@ -18,13 +22,22 @@
         <div class="text-medium font-medium pl-2">NAME:</div>
         <div class="pl-3 text-lg text-opacity-40">{profile.accName.toUpperCase()}</div>
         <hr class="my-2" />
-
+        <!-- Profile details -->
+        <div class="pl-1">
+          <button class="button" on:click={()=>show=true}>
+            <span class="link" >
+              
+              <span class="text-indigo-800 text-xl"><Fa icon={faUser} /> </span>
+              <span class="ml-2">Profile </span> 
+            </span>            
+          </button>
+        </div>
         <!-- Article types -->
-        <div class="text-medium pl-2 mb-2 font-medium">ARTICLES:</div>
+        <!-- <div class="text-base pl-2 mb-2 xs:mb-0 font-semibold">ARTICLES:</div> -->
         <div class="pl-1">
           <button class="button">
             <a class="link" disabled="{profile.totalPublished?'':'disabled'}"
-             href="{path}/articles" 
+             href="/{profile.id}/articles" 
             >
               <span class="text-indigo-800 text-xl"><Fa icon={faBookmark} /></span>
                <span class="ml-2">Published {profile.totalPublished}</span> 
@@ -33,12 +46,11 @@
         </div>
         <div class="pl-1">
           <button class="button">
-            <a class="link" href="{path}/drafts" 
-              disabled="{profile.totalDraft?'':'disabled'}" 
+            <span class="link"  on:click={()=>tabToDraft('draft')} 
             >
               <span class="text-indigo-800 text-xl"><Fa icon={faFile} /></span>
                <span class="ml-2">Draft {profile.totalDraft} </span> 
-            </a>            
+            </span>            
           </button>
         </div>
         <div class="pl-1">
@@ -52,13 +64,21 @@
         </div>
       </div>
     </div>
+    <Modal bind:show side="right" bottomClose={true} title="Profile Details">
+      <div class="shadow">
+        <EditProfile bind:profile  />
+      </div>
+      <div class="shadow mt-5">
+        <UpdatePassword />
+      </div>
+    </Modal>
 
 <style lang="scss">
 
   .profile{
     @apply block rounded-md h-full ml-0 sm:ml-5 md:ml-12 lg:ml-20 shadow-md
     border-indigo-200 border transition duration-500 hover:shadow-md 
-    hover:border-indigo-300 py-2 sm:pb-6;
+    hover:border-indigo-300 py-2 sm:pb-6 mb-10 sm:mb-0;
   }
 
   .profile-dp{

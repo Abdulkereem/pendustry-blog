@@ -5,11 +5,14 @@
 	import { removedReadTime, readtime } from './../../Utilities/Constants/responseParser.js';
 
 
-  export let articles;
+  export let articles, name;
 
 </script>
 
 <div class="cover">
+  <div class="heady">
+    Articles by {name}
+  </div>
   <hr class="hr" />
   <div class="post-cover">
     {#each articles as post,i (i)  }
@@ -23,7 +26,7 @@
         <!-- content container -->
         <div class="lg-texts">
           <!-- Date -->
-          <div class="text-opacity-80 tracking-tighter text-sm text-gray-900 ">
+          <div class="text-opacity-80 tracking-tighter text-base text-gray-900 ">
             {post.updatedAt} - {readtime(post.description)}
           </div>
           <!-- Title -->
@@ -56,7 +59,7 @@
   }
 
   .hr{
-    @apply my-10
+    @apply mb-10
   }
   
   .post-cover{
@@ -90,6 +93,11 @@
   .sub{
     line-height: 21px;
     color: #888888;
-    font-size: 14px;
+    font-size: 15px;
+  }
+
+  .heady{
+    @apply mt-4 font-bold tracking-tighter text-lg text-indigo-900
+     text-opacity-90 animate-pulse pl-2 xs:pl-4
   }
 </style>

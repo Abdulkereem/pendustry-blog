@@ -17,7 +17,7 @@
     let d = c-m;
     if(d < 1) return arr.map((e)=>({
       text:(e),
-      link: `${path?path:$page.path}?page=${e}&&limit=${limit?limit:l}&search=${search?search:''}`
+      link: `${path?path:$page.path}?page=${e}&limit=${limit?limit:l}&search=${search?search:''}`
     }));
     // alert();
     d= d+r >t? t-r: d;
@@ -28,16 +28,16 @@
   }
 
   let links = makePages(current,movement,range,length,limit)
-  $: console.log(links, '\n \n links');
+  // $: console.log(links, '\n \n links');
 
 
 </script>
 <div class="w-full block mb-5 py-2 px-9 xs:px-14 sm:px-6 lg:px-14">
   <!-- <div>{last_page} -{length}- {limit}- {current} ---{path} -={total}</div> -->
-  <div class="block bg-white py-3 xs:flex justify-between items-center">
+  <div class=" text-base block bg-white py-3 xs:flex justify-between items-center">
 
     <div class="w-full flex font-mono justify-center text-gray-900 text-opacity-80 font-medium pl-4">
-      <span>{limit*(current-1)} - {limit*(current-1)+current_page_total} of {total}</span>
+      <span>{(limit*(current-1))+1} - {limit*(current-1)+current_page_total} of {total}</span>
       <span class="ml-4">Page {current} of {length}</span>
 
     </div>
@@ -45,7 +45,7 @@
         <!-- Show initial page -->
         <a class="link tracking-tighter" sveltekit:prefetch 
           disabled={(current-(movement||3)) > 0?'enabled':'disabled'}
-          href={`${path?path:$page.path}?page=1&limit=${limit?limit:l}&search=${search?search:''}`}          
+          href={`${path?path:$page.path}?page=1&limit=${limit?limit:20}&search=${search?search:''}`}          
         >
           &lt;&lt;
         </a>
@@ -64,7 +64,7 @@
         {/if} -->
         <a class="link tracking-tighter" sveltekit:prefetch 
           disabled={(length-(current)) > (movement||3)?'enabled':'disabled'}
-          href={`${path?path:$page.path}?page=${length}&limit=${limit?limit:l}&search=${search?search:''}`}
+          href={`${path?path:$page.path}?page=${length}&limit=${limit?limit:20}&search=${search?search:''}`}
         >
           &gt;&gt;
         </a>

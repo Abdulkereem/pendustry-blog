@@ -42,7 +42,7 @@
   <!--Right Profile box -->
   <div class="profile-cover">
     <!-- Imported profile Component-->
-    <AdminProfile profile={payload} />
+    <AdminProfile profile={payload}  tabToDraft={switchTab}/>
   </div>
 
   <!-- Articles -->
@@ -75,8 +75,9 @@
   }
 
   .profile-cover{ 
-    box-sizing: border-box;
-   @apply mr-20 block sm:fixed sm:left-0 w-full sm:w-64  md:w-80 lg:w-96 mb-5 sm:mb-0;
+    // box-sizing: border-box;
+    z-index: 100;
+    @apply mr-20 block sm:fixed sm:left-0 w-full sm:w-64  md:w-80 lg:w-96 mb-5 sm:mb-0;
   }
   .articles{
     @apply box-border block  max-w-full sm:ml-64 md:ml-72 md:ml-96;

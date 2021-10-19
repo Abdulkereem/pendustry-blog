@@ -1,6 +1,8 @@
 <script>
-export let user, total;
+import Modal from "$lib/Modal.svelte";
 
+export let user, total;
+let show = true;
 </script>
 <div >
   <div class="img-cover" 
@@ -22,31 +24,32 @@ export let user, total;
     <div class="w-full xs:mx-4 sm:mx-10 md:mx-14 lg:mx-24">
       <h2 class="hh">STATS</h2>
       <hr class="hr" />
-      <div class="px-4 ">
+      <div class="px-1 ">
         <div class="stats">
-          <span>ARTICLES</span>
+          <span class="text-sm font-semibold">ARTICLES</span>
           <span>{total} </span>         
         </div>
         <hr class="hr" />
         <div class="stats">
-          <span>FOLLOWERS</span>
+          <span class="text-sm font-semibold">FOLLOWERS</span>
           <span>{total} </span>         
         </div>
         <hr class="hr" />
         <div class="stats">
-          <span>LIKES</span>
+          <span class="text-sm font-semibold">LIKES</span>
           <span>{Math.floor(Math.random()*1000)} </span>         
         </div>
         <hr class="hr" />
         <div class="mt-3 text-right">
-          <button class="follow">Follow</button>
-  
+          <button class="follow">Follow</button>  
         </div>
       </div>
 
     </div>
   </div>
   <hr />
+
+  <Modal bind:show >jnjnjnj</Modal>
 </div>
 
 <style lang="scss">
@@ -84,12 +87,12 @@ export let user, total;
   }
   
   .hh{
-    @apply text-gray-900 text-opacity-70 font-bold text-lg tracking-wider
+    @apply text-gray-900 text-opacity-70 font-bold tracking-widest
   }
 
   .stats{
-    @apply text-gray-900 text-opacity-80 tracking-tighter ml-2 font-medium
-    flex justify-between my-2 
+    @apply text-gray-900 text-opacity-80 ml-2 font-medium
+    flex justify-between mb-1 mt-2
   }
 
 </style>

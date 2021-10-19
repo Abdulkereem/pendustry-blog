@@ -11,7 +11,7 @@ import AccountPostCover from "$lib/AccountPosts/AccountPostCover.svelte";
   let error=false;
   let loaded=false;
 
-  $: console.log({user, pagination, articles});
+  // $: console.log({user, pagination, articles});
   const fetchUser=async()=>{
     try {
       //equilvalent data.data
@@ -37,7 +37,7 @@ import AccountPostCover from "$lib/AccountPosts/AccountPostCover.svelte";
       articles = await mapper(data.articles);
       // console.log({data});
     } catch (err) {
-      console.log({err})
+      // console.log({err})
       error = true;
     }
   

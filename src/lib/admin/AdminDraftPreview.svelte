@@ -1,15 +1,44 @@
 
 <script>
-	import { removedReadTime } from './../../Utilities/Constants/responseParser.js';
+	import { toFullMonth } from './../../Utilities/Constants/times.js';
+	import axios from 'axios';
+	import { removedReadTime, parseError, hToken } from './../../Utilities/Constants/responseParser.js';
 	import { page } from '$app/stores';
 	import NoArticleTemplate from './NoArticleTemplate.svelte';
+  import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 	import { fillMage } from './../../Utilities/Constants/posts.js';
   import Fa from 'svelte-fa/src/fa.svelte';
+  import { LAPI, banner_url, dp_url } from './../../Utilities/JSONS/endpoints.json'
 
   export let drafts;
   export let total;
   
   let {path} = $page; 
+  let fetching= false, errMessage, pagination;
+
+  const fetchMoreDrafts=async(type=null)=>{
+    alert(type)
+    if(fetching) return;
+    errMessage = null;
+    fetching= true;
+    try {
+      let url= type=='last'? pagination.previous_page_url: 
+      pagination?.next_page_url?pagination.next_page_url : `${LAPI}drafts?page=2&limit=5`
+      let {data} = await axios.get(url, {headers:hToken()});
+      // console.log(data);
+      drafts = data.drafts.map(d=>{
+        let createdAt = toFullMonth(d.createdAt);
+        let updatedAt = toFullMonth(d.updatedAt);
+        let banner = `${banner_url}${d.banner}`;
+        return  {...d, createdAt, updatedAt, banner};
+      })
+      pagination = data.pagination;      
+    } catch (error) {
+      console.log({error});
+      errMessage = parseError(error);
+    }
+    fetching = false
+  }
 </script>
 
 <div class="cover">
@@ -67,6 +96,44 @@
         </div>    
       {/each }
     </div>
+    
+    <!-- If there is error from fetching more drafts -->
+    {#if errMessage}
+      <div class="errors">
+        {errMessage}
+      </div>
+       <!-- content here -->
+    {/if}
+
+    {#if fetching}
+      <div class="flex justify-center items-center my-3">
+        <Fa icon={faSpinner} size="lg" spin />
+        <Fa icon={faSpinner} size="lg" spin />
+        <Fa icon={faSpinner} size="lg" spin />
+      </div>
+    {/if}
+
+    <!-- If pagination overload !.e total more than intial fetched 5-->
+    <div class="w-full ">
+      {#if total > 5}
+        <div class="flex w-full justify-center  my-3 bg-white rounded items-center">
+          {#if pagination?.previous_page_url}
+             <span class="cursor-pointer p-2 tracking-tighter" 
+                on:click={()=>fetchMoreDrafts('last')}
+              >
+                &lt;&lt;
+              </span>
+          {/if}
+          {#if !pagination || pagination?.next_page_url}
+            <span class="ml-10 cursor-pointer p-2 tracking-tighter" 
+              on:click={()=>fetchMoreDrafts('next')}
+            >
+              &gt;&gt;
+            </span>
+          {/if}
+        </div>
+      {/if}
+    </div>
 
   {/if}
 </div>
@@ -120,5 +187,9 @@
     line-height: 21px;
     color: #888888;
     font-size: 14px;
+  }
+
+  .errors{
+    @apply text-red-400 text-center text-base my-3
   }
 </style>

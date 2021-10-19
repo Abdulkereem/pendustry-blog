@@ -122,7 +122,7 @@
   }
 
   .input-lg{
-    @apply border p-1 ring-0 rounded-lg focus:border-indigo-900;
+    @apply border p-1 ring-0 text-base rounded-lg focus:border-indigo-900;
   }
 
   .input-mob{

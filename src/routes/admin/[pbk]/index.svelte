@@ -35,7 +35,7 @@
       data.drafts= mapper(data.drafts, 'draft');
       data.profilePic = `${dp_url}${data.profilePic}`;
       payload = data;
-      console.log({data});
+      // console.log({data});
     } catch (err) {
       console.log({err})
       error = true;

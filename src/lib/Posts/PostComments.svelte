@@ -45,14 +45,14 @@ import axios from 'axios';
       {#each comments as comment (comment.id)}
         <div class="border mb-2 p-2 rounded xs::rounded-md">
           <div class="flex items-center justify-between">
-            <span class="text-black font-mono font-extrabold text-opacity-80">
+            <span class="text-black font-mono font-bold text-opacity-80">
               {comment.name}
             </span>
-            <span class="font-normal text-gray-900 text-opacity-60">
+            <span class="text-base text-gray-900 text-opacity-60">
               {comment.createdAt}
             </span>
           </div>
-          <div class="my-2 ml-2 text-gray-900 text-opacity-90">
+          <div class="my-2 text-base ml-2 text-gray-900 text-opacity-90">
             {comment.content}
           </div>
          </div>
@@ -109,7 +109,7 @@ import axios from 'axios';
   }
 
   .chev{
-    @apply text-indigo-900 rounded px-8 py-1 cursor-pointer text-opacity-80
+    @apply text-base text-indigo-900 rounded px-8 py-1 cursor-pointer text-opacity-80
     transition hover:bg-white hover:scale-105 hover:text-opacity-100 duration-500 ease-in-out
   }
 </style>

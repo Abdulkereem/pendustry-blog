@@ -1,12 +1,13 @@
 import { dp_url, banner_url } from './../JSONS/endpoints.json';
 export const parseError=(err)=>{
-  console.log({err});
-  try {
-    let {response:{data:{message}}} = err;
-    return message;
-  } catch (error) {
-    return 'Oops! Something went wrong.';    
-  }
+  let res =  err?.response?.data?.message ||  'Oops! Something went wrong.';
+  return res;
+  // try {
+  //   let {response:{data:{message}}} = err;
+  //   return message;
+  // } catch (error) {
+  //   return 'Oops! Something went wrong.';    
+  // }
   // if(err && err.response && err.response.data && err.response.data.message) return err.response.data.message;
 }
 
@@ -44,9 +45,10 @@ export const getAU=()=>{
   if(!window) return null;
   try {
     if(!localStorage.AU) return window.location.replace('/account/login');;
-   let au= JSON.parse(atob(atob(localStorage.UTK)));
+   let au= JSON.parse(atob(atob(localStorage.AU)));
    return au;
   } catch (error) {
+    // console.log({error});
     return window.location.replace('/account/login');
   }
 }
@@ -74,15 +76,16 @@ export const hToken=()=>{
 /**Calculates the read time of an article from word length added to description of an article */
 export const readtime=(data)=>{
   if(!data) return '';
- data = data.match(/\[\[\d*\]\]/);
- if (!data) return '';
- data=data.toString();
- data= data.slice(2, data.length-2);
- let time = Number(data);
- if(isNaN(time)) return '';
- let _time = Math.round(time/200);
+  data = data.match(/\[\[\d*\]\]/);
+  if (!data) return '';
+  data=data.toString();
+  data= data.slice(2, data.length-2);
+  let time = Number(data);
+  if(isNaN(time)) return '';
+  let _time = Math.round(time/200);
   if(_time) return _time + ' min read';
-  return Math.round((0-(time/200))*60) +' sec read';
+  // console.log(Math.round(((time/200)-0)*60));
+  return Math.round(((time/200)-0)*60) +' sec read';
 };
 
 export const parseSearch=(str="")=>{
