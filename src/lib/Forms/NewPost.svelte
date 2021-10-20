@@ -5,7 +5,7 @@
   import Fa from 'svelte-fa/src/fa.svelte';
   import { faImage, faSpinner, faCheck } from '@fortawesome/free-solid-svg-icons';
   import axios from 'axios';
-  import { LAPI } from './../../Utilities/jsons/endpoints.json';
+  import { LAPI } from './../../Utilities/API/endpoints.js';
   import Editor from "$lib/Forms/Editor.svelte";
 
   export let draft;

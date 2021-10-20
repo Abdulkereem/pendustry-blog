@@ -1,5 +1,4 @@
 <script >
-	import Admin from './../../../lib/Admin/Admin.svelte';
   
   import { page } from "$app/stores";
   import axios from "axios";
@@ -7,6 +6,7 @@
   import {LAPI, banner_url, dp_url } from './../../../Utilities/API/endpoints.js';
   import {hToken} from './../../../Utilities/Constants/responseParser';
   import { toFullMonth } from "./../../../Utilities/Constants/times";
+  import Admin from "$lib/Admin/Admin.svelte";
 
   export let payload;
   let error=false;

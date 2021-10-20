@@ -9,7 +9,6 @@
   export let  payload;
   let tab = $page.query.get('tab');
 
-  let {path} = $page;
   $: { 
     onMount(()=>{
 

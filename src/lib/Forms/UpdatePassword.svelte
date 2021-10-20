@@ -1,7 +1,7 @@
 <script>  
-	import { hToken, saveAU } from './../../Utilities/Constants/responseParser.js';
+	import { hToken } from './../../Utilities/Constants/responseParser.js';
 	import { onMount } from 'svelte';
-  import { UAPI, dp_url } from './../../Utilities/JSONS/endpoints.json';
+  import { UAPI, dp_url } from './../../Utilities/API/endpoints.js';
   import Fa from 'svelte-fa/src/fa.svelte';
   import { faSpinner } from '@fortawesome/free-solid-svg-icons';
   import axios from 'axios';
