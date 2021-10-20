@@ -6,7 +6,8 @@
   import {LAPI, banner_url, dp_url } from './../../../Utilities/API/endpoints.js';
   import {hToken} from './../../../Utilities/Constants/responseParser';
   import { toFullMonth } from "./../../../Utilities/Constants/times";
-
+	import Admin from '$lib/Admins/Admin.svelte';
+  
   export let payload;
   let error=false;
   let loaded=false;
@@ -49,7 +50,7 @@
 </script>
 {#if !error && loaded}
   <div class="w-full max-w-full">
-    <Admin payload={payload} />
+    <Admin payload={payload}  />
 
   </div>
 {/if}
