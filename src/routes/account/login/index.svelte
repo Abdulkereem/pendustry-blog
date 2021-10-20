@@ -1,7 +1,7 @@
 <script>
 	import { saveAU, saveTK } from './../../../Utilities/Constants/responseParser.js';
 	import { parseError } from './../../../Utilities/Constants/responseParser';
-  import { UAPI } from './../../../Utilities/JSONS/endpoints.json'
+  import { UAPI } from './../../../Utilities/API/endpoints.js';
   import Fa from 'svelte-fa/src/fa.svelte';
   import { faSpinner } from '@fortawesome/free-solid-svg-icons';
   import axios from 'axios';  

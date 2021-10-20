@@ -1,12 +1,10 @@
 
 <script>
-	import { hToken, removedReadTime} from './../../Utilities/Constants/responseParser.js';
-  import { LAPI } from './../../Utilities/JSONS/endpoints.json';
-	import { axios } from 'axios';
+	import { removedReadTime} from './../../Utilities/Constants/responseParser.js';
 	import { page } from '$app/stores';
 	import NoArticleTemplate from './NoArticleTemplate.svelte';
-	import { fillMage } from './../../Utilities/Constants/posts.js';
-
+  
+	// import { fillMage } from './../../Utilities/Constants/posts.js';
   // let date = new Date();
   // let tempPost = Array(20).fill(0).map((e,i)=>{
     //   return {
@@ -34,7 +32,7 @@
         <div class="map">
           <!-- caption container -->
           <div class="caption-container">
-            <a href="/{post.goto}">
+            <a href="{path}/articles/{post.id}">
               <img class="caption" src="{post.banner}" alt="post" />
             </a>              
           </div>
@@ -42,7 +40,7 @@
           <div class="lg-texts">
             <!-- title -->
             <div class="self-start">
-              <a href="/{post.goto}" class="title ">{post.title}</a>
+              <a href="{path}/articles/{post.id}" class="title ">{post.title}</a>
             </div>
             <!-- description -->
             <div class="sub my-3 self-center">              

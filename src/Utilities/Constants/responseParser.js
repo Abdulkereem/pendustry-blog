@@ -1,4 +1,4 @@
-import { dp_url, banner_url } from './../JSONS/endpoints.json';
+import { dp_url, banner_url } from './../API/endpoints.js';
 export const parseError=(err)=>{
   let res =  err?.response?.data?.message ||  'Oops! Something went wrong.';
   return res;

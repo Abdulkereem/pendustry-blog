@@ -13,7 +13,7 @@
   import { hToken } from './../../../../Utilities/Constants/responseParser.js';
   import NewPost from "$lib/Forms/NewPost.svelte";
   import axios from "axios";
-  import { LAPI } from './../../../../Utilities/JSONS/endpoints.json'  
+  import { LAPI } from './../../../../Utilities/API/endpoints.js';
 	import { page } from '$app/stores';
 
   export let isNew;

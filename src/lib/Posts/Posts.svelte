@@ -3,7 +3,7 @@
 	import { removedReadTime, readtime } from './../../Utilities/Constants/responseParser.js';
 	import { toFullMonth } from './../../Utilities/Constants/times.js';
   import { onMount } from 'svelte';
-  import {banner_url, dp_url} from './../../Utilities/JSONS/endpoints.json'
+  import {banner_url, dp_url} from './../../Utilities/API/endpoints.js';
   import Fa from 'svelte-fa/src/fa.svelte';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 

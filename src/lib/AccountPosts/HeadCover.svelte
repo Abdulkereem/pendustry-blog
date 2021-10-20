@@ -1,8 +1,9 @@
 <script>
+import Follow from "$lib/Forms/Follow.svelte";
 import Modal from "$lib/Modal.svelte";
 
 export let user, total;
-let show = true;
+let show = false;
 </script>
 <div >
   <div class="img-cover" 
@@ -12,7 +13,7 @@ let show = true;
     >
     <div class="stack flex  bg-red-200 justify-center items-center">
       <div class="name-case">
-        {user.accName}
+        <!-- {user.accName} -->
       </div>
     </div>
   </div>
@@ -20,6 +21,9 @@ let show = true;
     <div class="w-full xs:mx-4 sm:mx-10 md:mx-14 mb-4 xs mb-0 lg:mx-24">
       <h2 class="hh">ABOUT</h2>
       <hr />
+      <div class="p-2 text-gray-900 text-opacity-80">
+        {user.about}
+      </div>
     </div>
     <div class="w-full xs:mx-4 sm:mx-10 md:mx-14 lg:mx-24">
       <h2 class="hh">STATS</h2>
@@ -41,7 +45,7 @@ let show = true;
         </div>
         <hr class="hr" />
         <div class="mt-3 text-right">
-          <button class="follow">Follow</button>  
+          <button class="follow" on:click={()=>show=true}>Follow</button>  
         </div>
       </div>
 
@@ -49,7 +53,12 @@ let show = true;
   </div>
   <hr />
 
-  <Modal bind:show >jnjnjnj</Modal>
+  <Modal bind:show side="right" title="Follow {user.accName}" bottomClose={true}>
+    <div class="px-1 shadow">
+      <Follow  user={user} />
+
+    </div>
+  </Modal>
 </div>
 
 <style lang="scss">

@@ -1,7 +1,4 @@
 import { writable } from "svelte/store";
+import { getAU } from "./Constants/responseParser";
 
-const getUser = ()=>{
-  return localStorage.AU? JSON.parse(atob(localStorage.AU)): null;
-}
-
-export const user = writable(getUser());
+export const USER = writable(getAU());

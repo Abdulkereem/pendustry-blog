@@ -6,9 +6,8 @@
 	import { page } from '$app/stores';
 	import NoArticleTemplate from './NoArticleTemplate.svelte';
   import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-	import { fillMage } from './../../Utilities/Constants/posts.js';
   import Fa from 'svelte-fa/src/fa.svelte';
-  import { LAPI, banner_url, dp_url } from './../../Utilities/JSONS/endpoints.json'
+  import { LAPI, banner_url } from './../../Utilities/API/endpoints.js';
 
   export let drafts;
   export let total;

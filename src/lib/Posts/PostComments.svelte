@@ -1,8 +1,8 @@
 <script>
 	import Fa from 'svelte-fa/src/fa.svelte';
-  import { LAPI } from './../../Utilities/JSONS/endpoints.json';
+  import { LAPI } from './../../Utilities/API/endpoints.js';
   import { faChevronRight, faComment, faChevronLeft, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
+  import axios from 'axios';
 
   export let comments
   export let total;

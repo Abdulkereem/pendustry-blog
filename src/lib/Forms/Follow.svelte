@@ -1,18 +1,17 @@
 <script>  
 	import { onMount } from 'svelte';
-  import { LAPI } from './../../Utilities/JSONS/endpoints.json';
+  import { UAPI } from './../../Utilities/API/endpoints.js';
   import Fa from 'svelte-fa/src/fa.svelte';
   import { faSpinner } from '@fortawesome/free-solid-svg-icons';
   import axios from 'axios';
-  let fullName ='';
   let email='';
-  let fullNameError= false;
   let emailError=false;
   let submitting=false;
   let responseError;
-  export let id;
+  export let id, user;
 
   onMount(()=>{
+    console.log(user);
     if(localStorage._cun_){
       try {
         let cun = JSON.parse(atob(localStorage._cun_));
@@ -32,19 +31,14 @@
   } 
 
   const validate=()=>{
-    fullNameError = !fullName.trim()?true:false;
     emailError = !regex(email)?true:false;
-    contentError = !content.trim()?true:false;
-    return (fullNameError || emailError || contentError)? false: true;
+    return !emailError
+
   }
 
   const checkBlur=({target:{value, name}})=>{
     if(name == 'email'){
       return emailError = !regex(value)? true : false;
-    }else if(name == 'fullName'){
-      return fullNameError = !value.trim()? true : false;
-    }else{
-      return contentError = !value.trim()? true : false;
     }
   }
 
@@ -53,38 +47,27 @@
     if(!validate()) return;
     submitting = true;
     responseError=null;
-    let payload={
-      name:fullName, email, content
-    }
+    let payload={ email }
     try {
-      let {data:{data:{comment}}} = await axios.post(`${LAPI}comment/${id}`, payload);
-
-      localStorage._cun_= btoa(JSON.stringify({name:fullName, email}))
+      let { data }= await axios.post(`${UAPI}follow/${user.id}`, payload);
+      console.log({data});
+      localStorage._cun_= btoa(JSON.stringify({email}))
       responseError=false;
     } catch (error) {
       console.log({error});
       responseError = true;
     }
     submitting = false;
-    setTimeout(()=>{responseError=null},2000);
+    setTimeout(()=>{responseError=null},6000);
   }
 
 </script>
-<div class=" w-full">
-  <!-- fullName -->
-  <div class="">        
-    <label for="fullName" class="label">Full name*</label>
-    <div class="w-full">
-      <input id="fullName" name="fullName" bind:value={fullName} 
-        class="inputs" placeholder="Full name" on:blur={checkBlur}
-      />
-    </div>
-    {#if fullNameError}
-        <div class="errors">
-          Full name is required
-        </div>
-      {/if}
+<div class=" w-full px-2 py-5">
+  <div class="mb-2 text-base font-base">
+    Receive email notifications about new articles from {user.accName}.
   </div>
+  <p  class="mb-5 text-base font-base">Your email would not be exposed</p>
+
   <!-- Email -->
   <div class="my-2">
     <label for="email"  class="label">Email *</label>
@@ -110,7 +93,7 @@
     {#if responseError == false}
       <div class="successful">
         Congrats! You have successfully subscribed to email 
-        notification whenever PUT USERNAME posts new articles
+        notification whenever {user.accName} posts new articles.
       </div>
     {/if}
 
@@ -134,9 +117,8 @@
 
   .inputs{
     font-size: 16px;
-    font-family: roboto;
-    line-height: 28px;
-    @apply outline-none rounded-md w-full py-1 px-2 border transition duration-500 transform 
+    line-height: 22px;
+    @apply outline-none rounded-md w-full py-2 px-2 border transition duration-500 transform 
     delay-100 focus:ring-1 ring-indigo-900 focus:border-indigo-900 ring-opacity-40 
     hover:border-indigo-200 hover:ring-opacity-10;
   }
@@ -146,15 +128,15 @@
   }
 
   .button{
-    @apply w-40 bg-indigo-900 text-white text-lg rounded py-2 
-    hover:shadow
+  @apply w-40 bg-indigo-900 text-white text-lg rounded py-1
+    hover:shadow;
   }
   .errors{
-    @apply text-red-400 text-center text-base
+    @apply text-red-600 text-center text-base py-2 px-1
   }
 
   .successful{
-    @apply py-2 rounded bg-indigo-900 text-center text-white text-sm
-    mx-2 xs:mx-5 sm:mx-10 md:mx-20 bg-opacity-90
+    box-sizing: border-box;
+    @apply text-center py-2  text-base px-1  bg-indigo-200
   }
 </style>

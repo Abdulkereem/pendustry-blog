@@ -1,9 +1,9 @@
 <script context="module">
+	import { LAPI } from './../Utilities/API/endpoints.js';
 	import { page } from '$app/stores';
 	import NoData from './../lib/Errors/NoData.svelte';
-  import {LAPI} from './../Utilities/JSONS/endpoints.json';
-  export async function load({page, fetch}){
 
+  export async function load({page, fetch}){
     let limit = page.query.get('limit');
     let _page = page.query.get('page');
     let search = page.query.get('search');

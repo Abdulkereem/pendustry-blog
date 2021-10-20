@@ -1,7 +1,0 @@
-{
-  "API":"https://pend.hiosoft.com.ng/",
-  "LAPI":"http://localhost:2021/api/",
-  "UAPI":"http://localhost:2021/auth/",
-  "banner_url":"http://localhost:2021/banners/",
-  "dp_url":"http://localhost:2021/dps/"
-}

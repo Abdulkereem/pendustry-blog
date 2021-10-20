@@ -4,7 +4,7 @@
   import { onMount } from "svelte";
   import Fa from "svelte-fa/src/fa.svelte";
   import { faBook, faSpinner } from '@fortawesome/free-solid-svg-icons';
-  import { LAPI } from './../../Utilities/JSONS/endpoints.json'
+  import { LAPI } from './../../Utilities/API/endpoints.js';
   import axios from 'axios';
   import { goto } from '$app/navigation';
   

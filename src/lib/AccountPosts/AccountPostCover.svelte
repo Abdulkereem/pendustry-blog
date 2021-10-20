@@ -20,7 +20,7 @@
 </script>
 
 <div> 
-  {#if isOwner?.id !== user?.id}
+  {#if true || isOwner?.id !== user?.id}
      <!--Head cover content here -->
      <HeadCover user={user} total={pagination && pagination.total} />
   {/if}

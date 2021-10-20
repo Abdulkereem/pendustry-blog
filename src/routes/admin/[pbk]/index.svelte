@@ -4,7 +4,7 @@
   import Admin from "$lib/Admin/Admin.svelte";
   import axios from "axios";
   import { onMount } from 'svelte';
-  import {LAPI, banner_url, dp_url } from './../../../Utilities/JSONS/endpoints.json';
+  import {LAPI, banner_url, dp_url } from './../../../Utilities/API/endpoints.js';
   import {hToken} from './../../../Utilities/Constants/responseParser';
   import { toFullMonth } from "./../../../Utilities/Constants/times";
 

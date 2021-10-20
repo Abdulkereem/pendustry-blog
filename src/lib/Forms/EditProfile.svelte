@@ -1,7 +1,7 @@
 <script>  
 	import { hToken, saveAU } from './../../Utilities/Constants/responseParser.js';
 	import { onMount } from 'svelte';
-  import { UAPI, dp_url } from './../../Utilities/JSONS/endpoints.json';
+  import { UAPI, dp_url } from './../../Utilities/API/endpoints.js';
   import Fa from 'svelte-fa/src/fa.svelte';
   import { faSpinner } from '@fortawesome/free-solid-svg-icons';
   import axios from 'axios';
@@ -176,7 +176,9 @@
   }
 
   .label{
-    @apply block pl-1 font-medium text-gray-800;
+    font-weight: 500;
+    font-size: 16px;
+    @apply block pl-1 text-opacity-70;
   }
 
   .button{

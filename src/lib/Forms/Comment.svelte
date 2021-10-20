@@ -1,6 +1,6 @@
 <script>  
 	import { onMount } from 'svelte';
-  import { LAPI } from './../../Utilities/JSONS/endpoints.json';
+  import { LAPI } from './../../Utilities/API/endpoints.js';
   import Fa from 'svelte-fa/src/fa.svelte';
   import { faSpinner } from '@fortawesome/free-solid-svg-icons';
   import axios from 'axios';

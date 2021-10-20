@@ -142,7 +142,9 @@
   }
 
   .label{
-    @apply block pl-1 font-medium text-gray-800;
+    font-weight: 500;
+    font-size: 16px;
+    @apply block pl-1 text-opacity-70;
   }
 
   .button{
@@ -150,6 +152,7 @@
     hover:shadow
   }
   .errors{
+
     @apply text-red-500 text-center text-base
   }
 

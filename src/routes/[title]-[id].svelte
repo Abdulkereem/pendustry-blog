@@ -1,7 +1,7 @@
 <script context="module">
   import { toFullMonth } from './../Utilities/Constants/times.js';
 	import { dpPic, bannerPic } from './../Utilities/Constants/responseParser.js';
-  import {LAPI} from './../Utilities/JSONS/endpoints.json';
+  import {LAPI} from './../Utilities/API/endpoints.js';
   
   export async function load({ page, fetch }) {
     console.log(page.params);

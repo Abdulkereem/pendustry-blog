@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { hToken } from './../../../../Utilities/Constants/responseParser.js';
-  import { LAPI, banner_url } from './../../../../Utilities/JSONS/endpoints.json';
+  import { LAPI, banner_url } from './../../../../Utilities/API/endpoints.js';
   import ViewDraft from "$lib/Admin/ViewDraft.svelte";
   import { toFullMonth } from './../../../../Utilities/Constants/times.js';
   import { removedReadTime } from './../../../../Utilities/Constants/responseParser';

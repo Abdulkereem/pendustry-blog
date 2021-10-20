@@ -1,7 +1,10 @@
 <script>
+import Follow from "$lib/Forms/Follow.svelte";
+import Modal from "$lib/Modal.svelte";
+
 
  export let user;
- 
+ let show = false
  
 
 </script>
@@ -17,12 +20,18 @@
     <div class="flex-1">
       <div>
         <a href="/{user.username||user.id}/articles" class="name">{user.accName}</a> 
-        <button class="follow">Follow</button>
+        <button class="follow" on:click={()=>show=true}>Follow</button>
       </div>
       <div>{user.about}</div>
     </div>
   </div>
 </div>
+
+<Modal side="right" bind:show title="Follow {user.accName}" bottomClose={true}>
+  <div class="px-1 shadow">
+    <Follow user={user} />
+  </div>
+</Modal>
 
 <style lang="scss">
   .user-dp{

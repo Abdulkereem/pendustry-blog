@@ -1,6 +1,6 @@
 <script context="module">
   import { onMount } from 'svelte';
-  import { LAPI, dp_url, banner_url } from './../../../../Utilities/JSONS/endpoints.json';
+  import { LAPI, dp_url, banner_url } from './../../../../Utilities/API/endpoints.js';
   export async function load({page, fetch}){
     const {article_id} = page.params;
     const url = `${LAPI}single-published/${article_id}`;

@@ -3,7 +3,7 @@
   import { page } from "$app/stores";
   import axios from "axios";
   import { onMount } from 'svelte';
-  import {LAPI, banner_url, dp_url } from './../../Utilities/JSONS/endpoints.json'; 
+  import {LAPI, banner_url, dp_url } from './../../Utilities/API/endpoints.js';
   import { toFullMonth } from "./../../Utilities/Constants/times";
 import AccountPostCover from "$lib/AccountPosts/AccountPostCover.svelte";
 
