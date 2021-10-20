@@ -1,7 +1,7 @@
 <script >
+	import Admin from './../../../lib/Admin/Admin.svelte';
   
   import { page } from "$app/stores";
-  import Admin from "$lib/Admin/Admin.svelte";
   import axios from "axios";
   import { onMount } from 'svelte';
   import {LAPI, banner_url, dp_url } from './../../../Utilities/API/endpoints.js';
