@@ -5,8 +5,13 @@
   import AdminPostsPreview from './AdminPostsPreview.svelte';
   import AdminDraftPreview from './AdminDraftPreview.svelte';
   import AdminProfile from './AdminProfile.svelte';
+  import Fa from 'svelte-fa/src/fa.svelte';
+  import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
+  import AddUser from '$lib/Forms/AddUser.svelte';
+  import Modal from '$lib/Modal.svelte';
 
   export let  payload;
+  let show = false;
   let tab = $page.query.get('tab');
 
   $: { 
@@ -65,6 +70,22 @@
       {/if}
     </div>
   </div>
+
+  <div class="fixed left-2 top-16 p-2 bg-white rounded-full" 
+    style="z-index:100"
+  >
+    <span class="text-3xl cursor-pointer rounded-full text-indigo-300"
+      on:click={()=>show=true}
+    >
+      <Fa icon={faUserPlus} />
+
+    </span>
+  </div>
+  <Modal bind:show side="right" bottomClose={true} title="Add New User">
+    <div class="shadow px-3 py-4">
+      <AddUser />
+    </div>
+  </Modal>
 </div>
 
 <style lang="scss">

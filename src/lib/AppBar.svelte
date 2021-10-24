@@ -4,9 +4,9 @@
   import { faSearch } from '@fortawesome/free-solid-svg-icons'
   import { onMount } from "svelte";
 
-  export let barHeight = 60;
   let showSearch= false;
   let searchKey="";
+  export let barHeight = 60;
 
   const toggleSearch=()=>{
     // if(showSearch && searchKey.trim()){

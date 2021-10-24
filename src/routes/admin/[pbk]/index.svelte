@@ -1,4 +1,6 @@
 <script >
+	import SomethingWentWrongError from './../../../lib/Errors/SomethingWentWrongError.svelte';
+	// import { goto } from '$app/navigation';
   
   import { page } from "$app/stores";
   import axios from "axios";
@@ -8,13 +10,15 @@
   import { toFullMonth } from "./../../../Utilities/Constants/times";
 	import Admin from '$lib/Admins/Admin.svelte';
   
-  export let payload;
+  let payload;
   let error=false;
   let loaded=false;
+  let status;
 
   const fetchUser=async()=>{
     try {
       //equilvalent data.data
+      status = null;
       let pbk = $page.params.pbk.split('?')[0];
       let {data:{data}} = await axios.get(`${LAPI}prefetch-user/${pbk}`, {headers: hToken()});
       // parse date to readable and set route for view
@@ -38,6 +42,7 @@
       // console.log({data});
     } catch (err) {
       console.log({err})
+      status = err.response?.status;
       error = true;
     }
   
@@ -53,4 +58,6 @@
     <Admin payload={payload}  />
 
   </div>
+{:else if loaded && error }
+  <SomethingWentWrongError status={status} />
 {/if}

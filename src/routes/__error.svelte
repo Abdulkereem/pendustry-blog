@@ -1,6 +1,6 @@
 <script context="module">
 	export function load({ error, status }) {
-    console.log({error});
+    console.log({error, status});
 		return {
 			props: {
 				status,
@@ -15,7 +15,7 @@ import ServerErrorPage from "$lib/Errors/ServerErrorPage.svelte";
 import UnauthorizedPage from "$lib/Errors/UnauthorizedPage.svelte";
 
 	export let status;
-
+ $: console.log(status, '\n\n is status');
 </script>
 
 <div class="cover bg-gradient">

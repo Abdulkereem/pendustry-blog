@@ -1,7 +1,7 @@
 <script>
   // import {faFolderOpen, faPen } from "@fortawesome/free-solid-svg-icons";
   // import Fa from "svelte-fa/src/fa.svelte";
-  export let message;
+  // export let message;
 </script>
 
 <div class="w-full max-w-sm mx-auto flex justify-center">

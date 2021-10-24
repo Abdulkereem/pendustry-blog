@@ -1,7 +1,7 @@
 <script>
-	import { saveAU, saveTK } from './../../../Utilities/Constants/responseParser.js';
-	import { parseError } from './../../../Utilities/Constants/responseParser';
-  import { UAPI } from './../../../Utilities/API/endpoints.js';
+	import { saveAU, saveTK } from './../../Utilities/Constants/responseParser.js';
+	import { parseError } from './../../Utilities/Constants/responseParser';
+  import { UAPI } from './../../Utilities/API/endpoints.js';
   import Fa from 'svelte-fa/src/fa.svelte';
   import { faSpinner } from '@fortawesome/free-solid-svg-icons';
   import axios from 'axios';  
@@ -24,7 +24,7 @@ import { goto } from '$app/navigation';
 
   const validate=()=>{
     emailError = (!/\w+@\w+\.\w+$/.test(email))?true:false;
-    passwordError = (password.trim().length < 8)?true:false;
+  passwordError = (password.trim().length < 8)?true:false;
     return (emailError || passwordError)? false: true;
   }
 
@@ -82,12 +82,12 @@ import { goto } from '$app/navigation';
             </div>
           {/if}
       </div>
-      <!-- Brief -->
+      <!-- Password -->
       <div class="my-3">
         <label for="password"  class="label">Password*</label>
         <div class="w-full">
           <input id="password" on:blur={checkBlur} bind:value={password} name="password" 
-            class="inputs" placeholder="Enter password" 
+            class="inputs" placeholder="Enter password"  type="password"
           />
           {#if passwordError}
             <div class="errors">
@@ -115,6 +115,10 @@ import { goto } from '$app/navigation';
             {/if}
           </div>
         </button>        
+      </div>
+      <div class="text-center">
+        Forgot password? Click 
+        <a class="text-indigo-500" href="/account/forgot-password">here</a>
       </div>
     </div>
 </div>

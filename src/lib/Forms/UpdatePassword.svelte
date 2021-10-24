@@ -1,6 +1,5 @@
 <script>  
-	import { hToken } from './../../Utilities/Constants/responseParser.js';
-	import { onMount } from 'svelte';
+	import { hToken } from './../../Utilities/Constants/responseParser'
   import { UAPI, dp_url } from './../../Utilities/API/endpoints.js';
   import Fa from 'svelte-fa/src/fa.svelte';
   import { faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -54,8 +53,7 @@
   }
 
 
-  onMount(async () => {
-  });
+
 
 </script>
 
@@ -85,7 +83,7 @@
       <label for="newPassword"  class="label">New password*</label>
       <div class="w-full">
         <input id="newPassword" on:blur={checkBlur} bind:value={newPassword} name="newPassword" 
-          class="inputs" placeholder="Enter new password" 
+          class="inputs" placeholder="Enter new password" type="password"
         />
         {#if newPasswordError}
           <div class="errors">
@@ -100,7 +98,7 @@
       <label for="confirmPassord"  class="label">Confirm new password*</label>
       <div class="w-full">
         <input id="confirmPassord" on:blur={checkBlur} bind:value={confirmPassword} name="confirmPassword" 
-          class="inputs" placeholder="Enter password" 
+          class="inputs" placeholder="Enter password" type="password"
         />
         {#if confirmPasswordError}
           <div class="errors">
