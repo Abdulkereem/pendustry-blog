@@ -1,10 +1,13 @@
 <script>
+	import ChangeEmail from './../Forms/ChangeEmail.svelte';
 	import Modal  from '$lib/Modal.svelte';
   import UpdatePassword from "$lib/Forms/UpdatePassword.svelte";
   import EditProfile from "$lib/Forms/EditProfile.svelte";
   import { faFile, faBookmark, faPen, faUser } from "@fortawesome/free-solid-svg-icons";
   import { page } from "$app/stores";
   import Fa from "svelte-fa/src/fa.svelte";
+  import UploadDp from '$lib/Forms/UploadDP.svelte';
+import VerifyEmail from '$lib/Forms/VerifyEmail.svelte';
 
   export let  profile;
   export let tabToDraft;
@@ -34,41 +37,64 @@
         </div>
         <!-- Article types -->
         <!-- <div class="text-base pl-2 mb-2 xs:mb-0 font-semibold">ARTICLES:</div> -->
-        <div class="pl-1">
-          <button class="button">
-            <a class="link" disabled="{profile.totalPublished?'':'disabled'}"
-             href="/{profile.id}/articles" 
-            >
-              <span class="text-indigo-800 text-xl"><Fa icon={faBookmark} /></span>
-               <span class="ml-2">Published {profile.totalPublished}</span> 
-            </a>
-          </button>
-        </div>
-        <div class="pl-1">
-          <button class="button">
-            <span class="link"  on:click={()=>tabToDraft('draft')} 
-            >
-              <span class="text-indigo-800 text-xl"><Fa icon={faFile} /></span>
-               <span class="ml-2">Draft {profile.totalDraft} </span> 
-            </span>            
-          </button>
-        </div>
-        <div class="pl-1">
-          <button class="button">
-            <a sveltekit:prefetch class="link" href="{path}/editor-new" >
-              
-              <span class="text-indigo-800 text-xl"><Fa icon={faPen} /> </span>
-              <span class="ml-2">Create new </span> 
-            </a>            
-          </button>
-        </div>
+        <!-- ACCOUNT MUST BE VERIFIED AND USERNAME SET -->
+        {#if profile?.verified && profile?.userName}
+          <div class="pl-1">
+            <button class="button">
+              <a class="link" disabled="{profile.totalPublished?'':'disabled'}"
+              href="/{profile.id}/articles" 
+              >
+                <span class="text-indigo-800 text-xl"><Fa icon={faBookmark} /></span>
+                <span class="ml-2">Published {profile.totalPublished}</span> 
+              </a>
+            </button>
+          </div>
+          <div class="pl-1">
+            <button class="button">
+              <span class="link"  on:click={()=>tabToDraft('draft')} 
+              >
+                <span class="text-indigo-800 text-xl"><Fa icon={faFile} /></span>
+                <span class="ml-2">Draft {profile.totalDraft} </span> 
+              </span>            
+            </button>
+          </div>
+          <div class="pl-1">
+            <button class="button">
+              <a sveltekit:prefetch class="link" href="{path}/editor-new" >
+                
+                <span class="text-indigo-800 text-xl"><Fa icon={faPen} /> </span>
+                <span class="ml-2">Create new </span> 
+              </a>            
+            </button>
+          </div>
+        {:else}
+          <div class="mt-2 text-base">
+            Verify your email and set your username.
+            <br />
+            Click on profile above
+          </div>
+        {/if}
       </div>
     </div>
     <Modal bind:show side="right" bottomClose={true} title="Profile Details">
+      {#if !profile.verified}
+      <div class="shadow">
+        <VerifyEmail bind:profile />
+      </div>
+      {/if}
+      <div  class="shawdow">
+        
+      </div>
       <div class="shadow">
         <EditProfile bind:profile  />
       </div>
-      <div class="shadow mt-5">
+      <div class="shadow  my-5">
+        <UploadDp bind:profile />
+      </div>
+      <div class="shadow  my-6">
+        <ChangeEmail bind:profile />
+      </div>
+      <div class="shadow">
         <UpdatePassword />
       </div>
     </Modal>

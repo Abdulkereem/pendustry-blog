@@ -55,7 +55,10 @@
       let data = await axios.post(`${UAPI}/register-user`, payload, {headers: hToken()});
       // console.log(data);
     
-      responseData = {status: 1, message: 'User successfully created.'};
+      responseData = {
+        status: 1,
+        message: 'User successfully created. Usere can proceed to login to verify new account.'
+      };
     } catch (err) {
       console.log({err});
       responseData = {status: 0, message: parseError(err)};

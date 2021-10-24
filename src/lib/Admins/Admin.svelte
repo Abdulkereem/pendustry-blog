@@ -15,6 +15,7 @@
   let tab = $page.query.get('tab');
 
   $: { 
+    // console.log(payload);
     onMount(()=>{
 
       if(localStorage._tbs_){
@@ -62,30 +63,34 @@
     </div>      
     <hr class="hr" />
     <!-- Tab section -->
-    <div>
-      {#if tab == 'published'}
-        <AdminPostsPreview total={payload.totalPublished} posts={payload.posts} />
-      {:else}
-        <AdminDraftPreview total={payload.totalDraft} drafts={payload.drafts} />
-      {/if}
-    </div>
+    {#if payload?.verified  && payload?.userName}
+      <div>
+        {#if tab == 'published'}
+          <AdminPostsPreview total={payload.totalPublished} posts={payload.posts} />
+        {:else}
+          <AdminDraftPreview total={payload.totalDraft} drafts={payload.drafts} />
+        {/if}
+      </div>
+    {/if}
   </div>
 
-  <div class="fixed left-2 top-16 p-2 bg-white rounded-full" 
-    style="z-index:100"
-  >
-    <span class="text-3xl cursor-pointer rounded-full text-indigo-300"
-      on:click={()=>show=true}
+  {#if payload?.type == 1 && payload?.userName}
+    <div class="fixed left-2 top-16 p-2 bg-white rounded-full" 
+      style="z-index:99"
     >
-      <Fa icon={faUserPlus} />
+      <span class="text-3xl cursor-pointer rounded-full text-indigo-300"
+        on:click={()=>show=true}
+      >
+        <Fa icon={faUserPlus} />
 
-    </span>
-  </div>
-  <Modal bind:show side="right" bottomClose={true} title="Add New User">
-    <div class="shadow px-3 py-4">
-      <AddUser />
+      </span>
     </div>
-  </Modal>
+    <Modal bind:show side="right" bottomClose={true} title="Add New User">
+      <div class="shadow px-3 py-4">
+        <AddUser />
+      </div>
+    </Modal>
+  {/if}
 </div>
 
 <style lang="scss">

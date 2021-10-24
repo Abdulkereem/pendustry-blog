@@ -66,7 +66,7 @@
   }
 
 </script>
-<div class="flex justify-center mt-2">
+<div class="flex justify-center py-1 mt-2">
   <div class="w-full px-3">
     <!-- Comment Header -->
     <div class="text-2xl font-medium mb-4">Update Basic Details</div>

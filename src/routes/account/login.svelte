@@ -43,12 +43,11 @@ import { goto } from '$app/navigation';
       await saveAU(data.data);
       await saveTK(data.token)
       return goto(`/admin/${data.data.id}`);
-      // responseData = {staus: 1, message: 'Content successfully published'};
+      // responseData = {status: 1, message: 'Content successfully published'};
     } catch (err) {
-      console.log({err});
+      // console.log({err});
       responseData = {status: 0, message: parseError(err)};
     }
-
     submitting = false;
   }
 

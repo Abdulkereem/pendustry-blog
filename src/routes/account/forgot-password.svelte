@@ -5,7 +5,6 @@
   import Fa from 'svelte-fa/src/fa.svelte';
   import { faSpinner } from '@fortawesome/free-solid-svg-icons';
   import axios from 'axios';  
-  import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
 
   let email='';
