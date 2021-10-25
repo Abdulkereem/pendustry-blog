@@ -54,6 +54,7 @@
   </div>
   <div class="text-base mb-4">
     Enter the OTP sent to your email to validate your account.
+    You can as well check your mail spam if not found in inbox.
   </div>
 
   <div>
