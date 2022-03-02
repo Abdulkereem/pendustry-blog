@@ -23,7 +23,7 @@ import UnauthorizedPage from "$lib/Errors/UnauthorizedPage.svelte";
 <div class="contain">
   {#if status == 404 }
     <NotFoundPage />
-  {:else if (status == 500 || status == 503 || status == 400) }
+  {:else if (status == 500 || status == 400) }
     <ServerErrorPage />
   {:else}
     <UnauthorizedPage />
