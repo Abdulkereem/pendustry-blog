@@ -16,6 +16,7 @@ import UnauthorizedPage from "$lib/Errors/UnauthorizedPage.svelte";
 
 	export let status;
  $: console.log(status, '\n\n is status');
+ 
 </script>
 
 <div class="cover bg-gradient">
